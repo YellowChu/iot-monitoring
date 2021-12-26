@@ -1,0 +1,9 @@
+<head><link href="http://localhost:8080/js/app.js" rel="preload" as="script"><link href="http://localhost:8080/js/chunk-vendors.js" rel="preload" as="script"></head>{% extends "base.html" %}
+
+{% block html %}
+    <body>
+        {% block content %}
+            {{ block.super }}
+        {% endblock %}
+    <script type="text/javascript" src="http://localhost:8080/js/chunk-vendors.js"></script><script type="text/javascript" src="http://localhost:8080/js/app.js"></script></body>
+{% endblock %}
