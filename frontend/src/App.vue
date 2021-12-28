@@ -1,34 +1,45 @@
 <template>
     <div class="demo">
-        <transition-group tag="div" class="div-slider" :name="back? 'slideback' : 'slide'">
-            <div v-if="currentIndex === 0" key="1" class="nav-bar-container">
-                    <router-link to="/home_sensor" class="left-nav" @click="next()">
-                        <div class="left-container">
+        <router-link to="/">
+            <button @click="change_menu('default')">Back</button>
+        </router-link>
+        <div class="main-container">
+            <transition name="fade" mode="out-in">
+                <div v-if="!picked" class="main-menu">
+                    <router-link to="/home_sensor" class="left-nav" :class="menu" @click="change_menu('left')">
+                        <div>
                             <img class="icon" src="@/assets/sensor-icon.svg">
                             <h1 class="icon_text">Home Sensor</h1>
                         </div>      
                     </router-link>
-                    <router-link to="/mailbox_notifier" class="right-nav" @click="next()">
-                        <div class="right-container">
+                    <router-link to="/mailbox_notifier" class="right-nav" :class="menu" @click="change_menu('right')">
+                        <div>
                             <img class="icon" src="@/assets/mailbox-icon.svg">
                             <h1>Mailbox Notifier</h1>
                         </div>
                     </router-link>
-            </div>
-            <div v-if="currentIndex === 1" key="2" class="nav-bar-container">
-                <div class="view">
-                    <router-link to="/" @click="prev()">
-                        <button>Back</button>
-                    </router-link>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="picked" class="view">
                     <router-view></router-view>
                 </div>
-            </div>
-        </transition-group>
+            </transition>
+        </div>
     </div>
 </template>
 
 <style>
-.nav-bar-container {
+html, body {
+    margin: 0;
+}
+
+@font-face {
+    font-family: "icon-font";
+    src: url("./assets/Viga-Regular.ttf") format("truetype");
+}
+
+.main-menu {
     position: absolute;
     display: flex;
     height: inherit;
@@ -36,53 +47,20 @@
 }
 
 .view {
-    background: #19507e;
-    width:inherit;
+    background: #e7e9eb;
+    width: inherit;
+    height: inherit
+    3.;
 }
 
-.slide-leave-active,
-.slide-enter-active {
-    transition: 1s;
-}
-.slide-enter-from {
-    transform: translate(100%, 0);
-}
-.slide-leave-to {
-    transform: translate(-100%, 0);
-}
 
-.slideback-leave-active,
-.slideback-enter-active {
-    transition: 1s;
-}
-.slideback-enter-from {
-    transform: translate(-100%, 0);
-}
-.slideback-leave-to {
-    transform: translate(100%, 0);
-}
-
-.div-slider{
+.main-container{
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
-.slid-enter-active,
-.slid-leave-active {
-    transition: 0.5s;
-}
 
-.slid-leave-to {
-    transform: translateX(100%);
-}
-.slid-enter-from {
-    transform: translateX(-100%);
-}
-
-html, body {
-    margin: 0;
-}
 
 .icon {
     width: 13rem;
@@ -96,11 +74,28 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: PLS;
+    font-family: icon-font;
 }
 .left-nav:hover {
     background-color: rgb(82, 19, 19);
     cursor: pointer;
+}
+.left-nav.default {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    width: 50%;
+    transition-property: width;
+}
+.left-nav.left {
+    transition: max-height 0.3s ease-out;
+    width: 100%;
+    transition-property: width;
+}
+.left-nav.right {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    width: 0%;
+    transition-property: width;
 }
 
 .right-nav { 
@@ -110,39 +105,72 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: PLS;
+    font-family: icon-font;
 }
 .right-nav:hover {
     background: #19507e;
     cursor: pointer;
 }
+.rigth-nav.default {
+    transition: max-height 0.3s ease-out;
+    width: 100%;
+    transition-property: width;
+}
+.right-nav.left {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    width: 0%;
+    transition-property: width;
+}
 
-@font-face {
-    font-family: "PLS";
-    src: url("./assets/Viga-Regular.ttf") format("truetype");
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
 
 
 <script>
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export default {
     name: "App",
     data() {
         return {
             picked: false,
             back: false,
-            currentIndex: 0
+            currentIndex: 0,
+            menu: "default",
         }
     },
     methods: {
-        next(){
+        next (){
             this.back = false;
             this.currentIndex++;
         },
-        prev(){
+        prev (){
             this.back = true;
             this.currentIndex--;
-        }
+        },
+        async change_menu (str) {
+            // sleep is to wait for the animation to finish/start
+            if (str == "default") {
+                this.picked = false;
+                await sleep(500);
+                this.menu = str;
+            } else {
+                this.menu = str;
+                await sleep(500);
+                this.picked = true;
+            }
+        },
     }
 }
 </script>
