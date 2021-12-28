@@ -1,10 +1,7 @@
 <template>
     <div class="demo">
-        <router-link to="/">
-            <button @click="change_menu('default')">Back</button>
-        </router-link>
         <div class="main-container">
-            <transition name="fade" mode="out-in">
+            <transition name="fade">
                 <div v-if="!picked" class="main-menu">
                     <router-link to="/home_sensor" class="left-nav" :class="menu" @click="change_menu('left')">
                         <div>
@@ -20,9 +17,14 @@
                     </router-link>
                 </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <transition name="fade">
                 <div v-if="picked" class="view">
-                    <router-view></router-view>
+                    <div class="base-view">
+                        <router-link to="/">
+                            <button @click="change_menu('default')">Back</button>
+                        </router-link>
+                        <router-view></router-view>
+                    </div>
                 </div>
             </transition>
         </div>
@@ -33,7 +35,6 @@
 html, body {
     margin: 0;
 }
-
 @font-face {
     font-family: "icon-font";
     src: url("./assets/Viga-Regular.ttf") format("truetype");
@@ -45,26 +46,25 @@ html, body {
     height: inherit;
     width: inherit;
 }
-
-.view {
-    background: #e7e9eb;
-    width: inherit;
-    height: inherit
-    3.;
-}
-
-
 .main-container{
     overflow: hidden;
     height: 100%;
     width: 100%;
 }
-
-
-
 .icon {
     width: 13rem;
     fill: red;
+}
+.view {
+    background: #e7e9eb;
+    width: inherit;
+    height: inherit;
+}
+.base-view {
+    display: inline-block;
+    margin: 1rem;
+    padding: 2rem;
+    background: #19507e;
 }
 
 .left-nav {
@@ -127,7 +127,6 @@ html, body {
 .fade-leave-active {
     transition: opacity 0.5s ease;
 }
-
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
