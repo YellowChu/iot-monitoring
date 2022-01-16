@@ -18,13 +18,11 @@
                 </div>
             </transition>
             <transition name="fade">
-                <div v-if="picked" class="view">
-                    <div class="base-view">
-                        <router-link to="/">
-                            <button @click="change_menu('default')">Back</button>
-                        </router-link>
-                        <router-view></router-view>
-                    </div>
+                <div class="base-view">
+                    <router-link to="/">
+                        <button @click="change_menu('default')">Back</button>
+                    </router-link>
+                    <router-view></router-view>
                 </div>
             </transition>
         </div>
@@ -55,15 +53,8 @@ html, body {
     width: 13rem;
     fill: red;
 }
-.view {
-    background: #e7e9eb;
-    width: inherit;
-    height: inherit;
-}
 .base-view {
     display: inline-block;
-    margin: 1rem;
-    padding: 2rem;
     background: #19507e;
 }
 
@@ -144,22 +135,13 @@ export default {
     data() {
         return {
             picked: false,
-            back: false,
-            currentIndex: 0,
             menu: "default",
         }
     },
     methods: {
-        next (){
-            this.back = false;
-            this.currentIndex++;
-        },
-        prev (){
-            this.back = true;
-            this.currentIndex--;
-        },
         async change_menu (str) {
             // sleep is to wait for the animation to finish/start
+            console.log("?");
             if (str == "default") {
                 this.picked = false;
                 await sleep(500);
