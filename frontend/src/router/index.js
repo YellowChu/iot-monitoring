@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import LandingPage from "@/views/LandingPage.vue"
 import HomeSensor from "@/views/HomeSensor.vue";
 import MailboxNotifier from "@/views/MailboxNotifier.vue"
 
@@ -6,6 +7,11 @@ import DltLtr from "@/components/Dlt.vue";
 import Test from "@/components/Test.vue";
 
 const routes = [
+    {
+        path: "/",
+        name: "LandingPage",
+        component: LandingPage,
+    },
     {
         path: "/home_sensor",
         name: "HomeSensor",
