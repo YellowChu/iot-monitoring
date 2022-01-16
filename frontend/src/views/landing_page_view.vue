@@ -19,9 +19,6 @@
             </transition>
             <transition name="fade">
                 <div class="base-view">
-                    <router-link to="/">
-                        <button @click="change_menu('default')">Back</button>
-                    </router-link>
                     <router-view></router-view>
                 </div>
             </transition>
@@ -125,6 +122,8 @@ html, body {
 </style>
 
 <script>
+// experimental
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

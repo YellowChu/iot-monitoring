@@ -1,38 +1,37 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LandingPage from "@/views/LandingPage.vue"
-import HomeSensor from "@/views/HomeSensor.vue";
-import MailboxNotifier from "@/views/MailboxNotifier.vue"
 
-import DltLtr from "@/components/Dlt.vue";
-import Test from "@/components/Test.vue";
+import home_sensor_list from "@/components/home_sensor_components/home_sensor_list.vue"
+import home_sensor_about from "@/components/home_sensor_components/home_sensor_about.vue"
+import home_sensor_detail from "@/components/home_sensor_components/home_sensor_detail.vue"
+import home_sensor_command from "@/components/home_sensor_components/home_sensor_command.vue"
 
 const routes = [
+    // {
+    //     path: "/",
+    //     redirect: "/list"
+    // },
     {
-        path: "/",
-        name: "LandingPage",
-        component: LandingPage,
-    },
-    {
-        path: "/home_sensor",
-        name: "HomeSensor",
-        component: HomeSensor,
+        path: "/list",
+        alias: "/",
+        name: "home_sensor_list",
+        component: home_sensor_list,
         children: [
             {
-                path: "dlt_ltr",
-                name: "dlt_ltr",
-                component: DltLtr,
+                path: ":device_id/detail",
+                name: "home_sensor_detail",
+                component: home_sensor_detail
             },
             {
-                path: "test",
-                name: "Test",
-                component: Test,
+                path: ":device_id/command",
+                name: "home_sensor_command",
+                component: home_sensor_command
             },
         ]
     },
     {
-        path: "/mailbox_notifier",
-        name: "MailboxNotifier",
-        component: MailboxNotifier,
+        path: "/about",
+        name: "home_sensor_about",
+        component: home_sensor_about,
     },
 ];
 
