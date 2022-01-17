@@ -5,22 +5,15 @@
             <div class="col">
                 <form class="sensor-form">
                     <div class="mb-3">
-                        <label for="exampleFormControlSelect1">Change SF</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>SF7</option>
-                            <option>SF8</option>
-                            <option>SF9</option>
-                            <option>SF10</option>
-                            <option>SF11</option>
-                            <option>SF12</option>
-                        </select>
+                        <label for="exampleFormControlSelect1">Name</label>
+                        <input type="text" class="form-control" v-model="sensor_name">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleColorInput" class="form-label">Change color</label>
-                        <input type="color" class="form-control" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                        <label for="exampleColorInput" class="form-label">Description</label>
+                        <textarea class="form-control" rows="3" v-model="sensor_description"></textarea>
                     </div>
                     <div class="mb-3">
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -46,3 +39,35 @@
 
 }
 </style>
+
+<script setup>
+import axios from "axios"
+
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+
+
+const route = useRoute()
+let sensor_name = ref("");
+let sensor_description = ref("");
+
+onMounted(() => {
+    get_device_data(route.params.device_id);
+})
+watch(
+    () => route.params.device_id,
+    async new_device_id => {
+        await get_device_data(new_device_id);
+    }
+)
+
+async function get_device_data(device_id) {
+    axios
+        .get("/api/sensor/room_sensor_data/" + device_id + "/")
+        .then((response) => {
+            console.log("?", response)
+            sensor_name.value = response.data.sensor_name;
+            sensor_description.value = response.data.sensor_description;
+        })
+}
+</script>

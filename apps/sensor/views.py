@@ -13,9 +13,7 @@ def list_room_sensors(request):
 def room_sensor_data(request, pk):
     room_sensor = get_object_or_404(RoomSensor, pk=pk)
     sensor_data_list = []
-    print(pk)
     if int(pk) == 2:
-        print("?")
         sensor_data_list = [{
             "time": "2022-01-16T09:30:12.028Z",
             "pressure": 99435.75,
@@ -33,5 +31,8 @@ def room_sensor_data(request, pk):
             }
             sensor_data_list.append(sensor_data)
     
-    print(sensor_data_list)
-    return JsonResponse({"sensor_data_list": sensor_data_list})
+    return JsonResponse({
+        "sensor_name": room_sensor.device_name,
+        "sensor_description": room_sensor.device_description,
+        "sensor_data_list": sensor_data_list,
+    })
