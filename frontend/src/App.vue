@@ -4,7 +4,7 @@
 </div>
 </template>
 
-<style>
+<style scoped>
 @font-face {
     font-family: "main_font";
     src: url("./assets/Viga-Regular.ttf") format("truetype");
