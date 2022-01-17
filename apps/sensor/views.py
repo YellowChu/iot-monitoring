@@ -5,7 +5,7 @@ from .models import RoomSensor
 
 
 def list_room_sensors(request):
-    room_sensors = list(RoomSensor.objects.all().values("pk", "device_id"))
+    room_sensors = list(RoomSensor.objects.all().values("pk", "device_id", "device_name", "device_description"))
 
     return JsonResponse({"room_sensors": room_sensors})
 

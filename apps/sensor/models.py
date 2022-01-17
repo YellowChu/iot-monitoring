@@ -95,6 +95,9 @@ class UplinkGateway(models.Model):
 
 class RoomSensor(models.Model):
     device_id = models.CharField(max_length=256, default="")
+    device_name = models.CharField(max_length=256, default="")
+    device_description = models.TextField(blank=True)
+
     uplinks = models.ManyToManyField(Uplink, blank=True)
 
     ACTIVATION_CHOICES = [
