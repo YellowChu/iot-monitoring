@@ -1,95 +1,46 @@
 <template>
-  <div style="width: 400px">
-    <div style="display: flex; justify-content: center">
-      <button type="button" @click="shuffleData">Shuffle</button>
-      <button type="button" @click="switchLegend">Swicth legends</button>
+    <div class="example">
+        <h4>Composition API Line chart</h4>
+        <apexcharts
+            width="1200"
+            height="600"
+            type="line"
+            :options="chartOptions"
+            :series="series.yaxis"
+        />
     </div>
-    <DoughnutChart v-bind="doughnutChartProps" />
-  </div>
 </template>
 
-<script>
-import { computed, ref } from "vue";
-import { shuffle } from "lodash";
-import { DoughnutChart, useDoughnutChart } from "vue-chart-3";
-import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
+<script setup>
+import { defineProps, reactive, toRefs } from "vue";
+import apexcharts from "vue3-apexcharts";
 
-Chart.register(...registerables);
+const props = defineProps({
+    xaxis: Array,
+    yaxis: Array,
+})
 
-export default {
-  name: "line_chart",
-  components: { DoughnutChart },
-  setup() {
-    const dataValues = ref([30, 40, 60, 70, 5]);
-    const toggleLegend = ref(true);
+const { xaxis, yaxis } = toRefs(props);
 
-    const testData = computed<ChartData<"doughnut">>(() => ({
-      labels: ["Paris", "Nîmes", "Toulon", "Perpignan", "Autre"],
-      datasets: [
-        {
-          data: dataValues.value,
-          backgroundColor: [
-            "#77CEFF",
-            "#0079AF",
-            "#123E6B",
-            "#97B0C4",
-            "#A5C8ED",
-          ],
-        },
-      ],
-    }));
+console.log(props.xaxis)
 
-    const options = computed<ChartOptions<"doughnut">>(() => ({
-      scales: {
-        myScale: {
-          type: "logarithmic",
-          position: toggleLegend.value ? "left" : "right",
-        },
-      },
-      plugins: {
-        legend: {
-          position: toggleLegend.value ? "top" : "bottom",
-        },
-        title: {
-          display: true,
-          text: "Chart.js Doughnut Chart",
-        },
-      },
-    }));
+// const xaxis = reactive([
+//     "Tue, 21 Dec 2021 11:17:48 GMT",
+//     "Tue, 21 Dec 2021 12:09:27 GMT",
+//     "Tue, 21 Dec 2021 16:11:59 GMT",
+// ])
+// const yaxis = reactive([30, 50, 49])
 
-    const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
-      chartData: testData,
-      options,
-    });
-
-    function shuffleData() {
-      dataValues.value = shuffle(dataValues.value);
-      console.log(doughnutChartRef.value.chartInstance);
-    }
-
-    function switchLegend() {
-      toggleLegend.value = !toggleLegend.value;
-    }
-
-    return {
-      shuffleData,
-      switchLegend,
-      testData,
-      options,
-      doughnutChartRef,
-      doughnutChartProps,
-    };
-  },
-};
+const chartOptions = reactive({
+    xaxis: {
+        type: "datetime",
+        categories: xaxis,
+    },
+});
+const series = reactive({
+    yaxis: [{
+        name: "series-1",
+        data: yaxis
+    }]
+});
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

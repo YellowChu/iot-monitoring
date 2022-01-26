@@ -4,6 +4,8 @@ import paho.mqtt.client as mqtt
 import random
 import sys
 from dateutil.parser import isoparse
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 
 from django.conf import settings
 
@@ -17,6 +19,17 @@ PUBLIC_TLS_ADDRESS_PORT = settings.TTN_MQTT_TLS_ADDRESS_PORT
 DEVICE_ID = settings.TTN_DEVICE_ID
 ALL_DEVICES = True
 QOS = 0
+
+
+def notify_about_uplink():
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "sensor",
+        {
+            "type": "send_message",
+            "message": "New uplink"
+        }
+    )
 
 
 def parse_uplink_message(msg_payload):
@@ -57,9 +70,10 @@ def parse_uplink_message(msg_payload):
             uplink=uplink,
         )
 
-    if device_id == "lopy4-otaa":
-        room_sensor, _ = RoomSensor.objects.get_or_create(device_id=device_id)
-        room_sensor.uplinks.add(uplink)
+    room_sensor, _ = RoomSensor.objects.get_or_create(device_id=device_id)
+    room_sensor.uplinks.add(uplink)
+
+    notify_about_uplink()
 
 
 # The callback for when a PUBLISH message is received from the server.

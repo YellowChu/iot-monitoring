@@ -36,3 +36,20 @@ def room_sensor_data(request, pk):
         "sensor_description": room_sensor.device_description,
         "sensor_data_list": sensor_data_list,
     })
+
+
+def ws_send(request):
+    from asgiref.sync import async_to_sync
+    from channels.layers import get_channel_layer
+
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "sensor",
+        {
+            "type": "send_message",
+            "message": "Hola"
+        }
+    )
+    return JsonResponse({
+        "sent": "msg"
+    })

@@ -70,6 +70,7 @@ function get_room_sensor() {
     axios
         .get("/api/v1/roomsensor/")
         .then((response) => {
+            console.log(response);
             data.device_list = response.data;
 
             if (route.params.device_id) {
