@@ -20,7 +20,7 @@ class RoomSensorSerializer(serializers.ModelSerializer):
                 "battery": 4.691720485687256
             }]
         else:
-            for uplink in room_sensor.uplinks.all()[:8]:
+            for uplink in room_sensor.uplinks.all()[:10]:
                 pressure, temperature, battery = room_sensor.parse_uplink_payload(uplink.payload)
                 sensor_data = {
                     "time": uplink.received_at or uplink.created,
