@@ -109,7 +109,8 @@ const update_room_sensor = inject("update_room_sensor");
 
 // websocket listen
 const sensor_socket = new WebSocket(
-    "ws://"
+    (window.location.protocol === "https:" ? "wss" : "ws")
+    + "://"
     + window.location.host
     + "/ws/sensor/"
 );

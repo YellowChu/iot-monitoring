@@ -1,3 +1,13 @@
+FROM node:16-alpine as nodebuilder
+
+WORKDIR /code
+
+COPY . /code/
+
+RUN npm --prefix frontend install
+RUN npm --prefix frontend run build
+
+
 FROM python:3.7-slim
 
 RUN apt-get update && apt-get install build-essential -y
@@ -5,13 +15,14 @@ RUN apt-get update && apt-get install build-essential -y
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /code
+WORKDIR /app
 
-COPY requirements.txt /code/
+COPY --from=nodebuilder /code/ /app/
+
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY . /code/
+RUN python manage.py migrate
+RUN python manage.py collectstatic --noinput
 
-RUN apt-get install -y nodejs \
-    npm
+CMD daphne asgi:application --bind 0.0.0.0 --port $PORT

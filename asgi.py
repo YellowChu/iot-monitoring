@@ -16,9 +16,8 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
 from apps.common import routing
-from apps.common.mqtt import start_mqtt_broker
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', ".settings")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', "settings.settings")
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
@@ -28,5 +27,7 @@ application = ProtocolTypeRouter({
 })
 
 # Subscribe to TTN MQTT Server
+from apps.common.mqtt import start_mqtt_broker
+
 thread = Thread(target=start_mqtt_broker)
 thread.start()

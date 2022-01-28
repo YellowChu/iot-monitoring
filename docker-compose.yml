@@ -18,17 +18,14 @@ services:
     ports:
       - '6380:6379'
 
+  node:
+    image: node:16-alpine
+
   web:
     build: .
-    command: sh -c "npm --prefix frontend install &&
-                    npm --prefix frontend run build &&
-                    python manage.py wait_for_db &&
-                    python manage.py migrate &&
-                    python manage.py collectstatic --noinput &&
-                    python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - .:/code
-      # - static:/static
+      - .:/app
     ports:
       - "8000:8000"
       - "8080:8080"
@@ -39,16 +36,4 @@ services:
     depends_on:
       - db
       - cache
-
-#   nginx:
-#     build: ./nginx
-#     volumes:
-#       - static:/static
-#     ports: 
-#       - "08:08"
-#     depends_on:
-#       - web
-
-
-# volumes:
-#   static:
+      - node
