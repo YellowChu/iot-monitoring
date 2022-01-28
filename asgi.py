@@ -8,13 +8,15 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 """
 
 import os
+from threading import Thread
 
 from django.core.asgi import get_asgi_application
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
-from apps.sensor import routing
+from apps.common import routing
+from apps.common.mqtt import start_mqtt_broker
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', ".settings")
 
@@ -26,7 +28,5 @@ application = ProtocolTypeRouter({
 })
 
 # Subscribe to TTN MQTT Server
-from threading import Thread
-from apps.sensor.mqtt import start_mqtt_broker
 thread = Thread(target=start_mqtt_broker)
 thread.start()

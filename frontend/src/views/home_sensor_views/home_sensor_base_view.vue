@@ -25,7 +25,7 @@
 </div>
 </template>
 
-<style>
+<style scoped>
 .navbar-brand {
     margin-left: 1rem;
 }

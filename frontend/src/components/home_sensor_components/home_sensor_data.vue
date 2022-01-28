@@ -2,6 +2,7 @@
 <div class="row home-sensor-data" style="text-align: left">
     <div class="row" style="margin-top: 1rem;">
         <h4>Temperature readings</h4>
+
         <div class="col-8" style="margin-top: 1rem;">
             <line_chart
                 :xaxis="props.data_list.map(obj => obj.time)"
@@ -9,28 +10,32 @@
                 color="#700000"
             ></line_chart>
         </div>
+
         <div class="col">
             <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Temperature [°C]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
-                        <th scope="row">{{ idx }}</th>
-                        <td>{{ parse_date(data.time) }}</td>
-                        <td>{{ parse_temp(data.temperature) }}</td>
-                    </tr>
-                </tbody>
+                <div class="tableFixHead">
+                    <thead>
+                        <tr>
+                            <th scope="col">i</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Temperature [°C]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
+                            <th scope="row">{{ idx }}</th>
+                            <td>{{ parse_date(data.time) }}</td>
+                            <td>{{ data.temperature.toFixed(2) }}</td>
+                        </tr>
+                    </tbody>
+                </div>
             </table>
         </div>
     </div>
 
     <div class="row" style="margin-top: 2rem;">
         <h4>Pressure readings</h4>
+
         <div class="col-8" style="margin-top: 1rem;">
             <line_chart
                 :xaxis="props.data_list.map(obj => obj.time)"
@@ -38,47 +43,28 @@
                 color="#002D62"
             ></line_chart>
         </div>
+
         <div class="col">
             <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Pressure [kPa]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
-                        <th scope="row">{{ idx }}</th>
-                        <td>{{ parse_date(data.time) }}</td>
-                        <td>{{ parse_temp(data.pressure) }}</td>
-                    </tr>
-                </tbody>
+                <div class="tableFixHead">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Pressure [kPa]</th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                        <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
+                            <th scope="row">{{ idx }}</th>
+                            <td>{{ parse_date(data.time) }}</td>
+                            <td>{{ data.pressure.toFixed(2) }}</td>
+                        </tr>
+                    </tbody>
+                </div>
             </table>
         </div>
     </div>
-
-
-    <!-- <table class="table">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Time</th>
-                <th scope="col">Temperature [°C]</th>
-                <th scope="col">Pressure [kPa]</th>
-                <th scope="col">Battery [V]</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
-                <th scope="row">{{ idx }}</th>
-                <td>{{ parse_date(data.time) }}</td>
-                <td>{{ parse_temp(data.temperature) }}</td>
-                <td>{{ parse_pres(data.pressure) }}</td>
-                <td>{{ parse_batt(data.battery) }}</td>
-            </tr>
-        </tbody>
-    </table> -->
 </div>
 </template>
 
@@ -86,6 +72,23 @@
 .home-sensor-data {
     margin-top: 1rem;
 }
+
+.tableFixHead { 
+    overflow: auto;
+    height: 500;
+}
+.tableFixHead thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+table  { 
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td { padding: 8px 16px; }
+th     { background:#eee; }
 </style>
 
 <script setup>
@@ -129,17 +132,5 @@ function parse_date(date_str) {
     let date = new Date(Date.parse(date_str));
     // return date.toUTCString()
     return moment(date).format("DD.MM.YYYY HH:mm");
-}
-
-function parse_temp(temp) {
-    return temp.toFixed(2)
-}
-
-function parse_pres(pres) {
-    return (pres / 1000).toFixed(2)
-}
-
-function parse_batt(batt) {
-    return batt.toFixed(2)
 }
 </script>

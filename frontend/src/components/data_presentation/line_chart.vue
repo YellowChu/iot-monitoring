@@ -34,7 +34,7 @@ let data = reactive({
         },
         colors: [props.color],
         markers: {
-            size: [4, 5]
+            size: [4, 6]
         },  
         xaxis: {
             type: "datetime",

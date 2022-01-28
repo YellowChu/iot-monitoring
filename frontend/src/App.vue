@@ -14,8 +14,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Helvetica;
     text-align: center;
+    font-family: Helvetica;
     color: #2c3e50;
 }
 

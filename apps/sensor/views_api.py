@@ -11,6 +11,7 @@ class RoomSensorViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     serializer_class = RoomSensorSerializer
     queryset = RoomSensor.objects.all().order_by("id")

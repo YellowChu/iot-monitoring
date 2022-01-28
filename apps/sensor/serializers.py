@@ -1,3 +1,5 @@
+from random import randint
+
 from apps.sensor.models import RoomSensor
 
 from rest_framework import serializers
@@ -12,13 +14,129 @@ class RoomSensorSerializer(serializers.ModelSerializer):
 
     def get_sensor_data_list(self, room_sensor):
         sensor_data_list = []
-        if room_sensor.pk == 2:
-            sensor_data_list = [{
-                "time": "2022-01-16T09:30:12.028Z",
-                "pressure": 99435.75,
-                "temperature": 23.431564331054688,
-                "battery": 4.691720485687256
-            }]
+        if room_sensor.device_id == "test":
+            sensor_data_list = [
+                {
+                    "time": "2022-01-16T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-17T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-18T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-19T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-20T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-21T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-22T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-23T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-24T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-25T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-26T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-27T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-28T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-29T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-30T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-01-31T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-02-01T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-02-02T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-02-03T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+                {
+                    "time": "2022-02-04T09:30:12.028Z",
+                    "pressure": randint(100, 120),
+                    "temperature": randint(20, 30),
+                    "battery": 4.691720485687256
+                },
+            ]
         else:
             for uplink in room_sensor.uplinks.all()[:10]:
                 pressure, temperature, battery = room_sensor.parse_uplink_payload(uplink.payload)
