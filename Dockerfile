@@ -15,6 +15,3 @@ COPY . /code/
 
 RUN apt-get install -y nodejs \
     npm
-
-RUN npm --prefix frontend install
-RUN npm --prefix frontend run build

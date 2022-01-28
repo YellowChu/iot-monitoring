@@ -137,8 +137,5 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# django settings
-settings/settings.py
-
 # vue
 templates/base-vue.html
