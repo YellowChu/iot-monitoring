@@ -29,5 +29,4 @@ class RoomSensorSerializer(serializers.ModelSerializer):
                     "battery": battery, 
                 }
                 sensor_data_list.append(sensor_data)
-        print(sensor_data_list)
         return sensor_data_list
