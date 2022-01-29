@@ -4,7 +4,19 @@
 </div>
 </template>
 
-<style scoped>
+<style>
+::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e1e24;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b2b2bc;
+}
+
 @font-face {
     font-family: "main_font";
     src: url("./assets/Viga-Regular.ttf") format("truetype");
@@ -18,7 +30,6 @@
     font-family: Helvetica;
     color: #2c3e50;
 }
-
 </style>
 
 <script setup>

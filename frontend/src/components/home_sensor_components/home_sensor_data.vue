@@ -12,13 +12,13 @@
         </div>
 
         <div class="col">
-            <table class="table">
-                <div class="tableFixHead">
+            <div class="tableFixHead">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">i</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Temperature [°C]</th>
+                            <th scope="col" class="bg-dark text-white"></th>
+                            <th scope="col" class="bg-dark text-white">Time</th>
+                            <th scope="col" class="bg-dark text-white">Temperature [°C]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,8 +28,8 @@
                             <td>{{ data.temperature.toFixed(2) }}</td>
                         </tr>
                     </tbody>
-                </div>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -45,13 +45,13 @@
         </div>
 
         <div class="col">
-            <table class="table">
-                <div class="tableFixHead">
+            <div class="tableFixHead">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Pressure [kPa]</th>
+                            <th scope="col" class="bg-dark text-white"></th>
+                            <th scope="col" class="bg-dark text-white">Time</th>
+                            <th scope="col" class="bg-dark text-white">Pressure [kPa]</th>
                         </tr>
                     </thead>    
                     <tbody>
@@ -61,8 +61,8 @@
                             <td>{{ data.pressure.toFixed(2) }}</td>
                         </tr>
                     </tbody>
-                </div>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -81,6 +81,18 @@
     position: sticky;
     top: 0;
     z-index: 1;
+}
+
+table::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+table::-webkit-scrollbar-track {
+    background: #1e1e24;
+}
+
+table::-webkit-scrollbar-thumb {
+    background: #b2b2bc;
 }
 
 table  { 

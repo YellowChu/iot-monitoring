@@ -20,7 +20,6 @@ const props = defineProps({
     color: String,
 })
 
-console.log(props.color, props.xaxis, props.yaxis);
 
 let data = reactive({
     chart_options: {
@@ -30,6 +29,12 @@ let data = reactive({
                 tools:{
                     download: false,
                 }
+            }
+        },
+        tooltip: {
+            enabled: true,
+            x: {
+                format: "dd MMM hh:mm"
             }
         },
         colors: [props.color],
