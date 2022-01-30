@@ -99,20 +99,9 @@ class RoomSensor(models.Model):
     device_description = models.TextField(blank=True)
 
     uplinks = models.ManyToManyField(Uplink, blank=True)
-
-    ACTIVATION_CHOICES = [
-        (0, "OTAA"),
-        (1, "ABP"),
-    ]
-    activation_method = models.SmallIntegerField(choices=ACTIVATION_CHOICES, null=True, blank=True)
-    # OTAA params
-    app_eui = models.CharField(max_length=64)
-    dev_eui = models.CharField(max_length=64)
-    app_key = models.CharField(max_length=64)
-    # ABP params
-    nwks_key = models.CharField(max_length=64)
-    apps_key = models.CharField(max_length=64)
-    dev_addr = models.CharField(max_length=64)
+    displayed_uplinks_number = models.PositiveIntegerField(null=True)
+    display_temperature = models.BooleanField(default=True)
+    display_pressure = models.BooleanField(default=False)
 
     def __str__(self):
         return self.device_id

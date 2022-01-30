@@ -140,9 +140,6 @@ const route = useRoute()
 provide("update_room_sensor", get_room_sensor);
 
 
-// watch([data.device_id, data.device_name, data.device_name], () => {
-//     data.enable_create = true;
-// })
 watch(() => [data.device_id, data.device_name, data.device_name], () => {
     data.enable_create = true;
 })
@@ -204,5 +201,6 @@ function change_displayed_device(device) {
         data.displayed_device = device;
         router.push({ name: 'home_sensor_data', params: { device_id: device.id } });
     }
+    console.log(data.displayed_device);
 }
 </script>

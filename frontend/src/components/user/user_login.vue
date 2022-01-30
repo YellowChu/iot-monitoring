@@ -8,13 +8,13 @@
             <form @submit.prevent="login_submit()">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" style="height: 3rem;"><font-awesome-icon :icon="['fas', 'user']" /></span>
+                        <span class="input-group-text" style="height: 3rem;"><font-awesome-icon :icon="['fas', 'user']"/></span>
                     </div>
                     <input type="text" class="form-control" placeholder="Username" v-model="username">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" style="height: 3rem;"><font-awesome-icon :icon="['fas', 'lock']" /></span>
+                        <span class="input-group-text" style="height: 3rem;"><font-awesome-icon :icon="['fas', 'lock']"/></span>
                     </div>
                     <input type="password" class="form-control" placeholder="Password" v-model="password">
                 </div>

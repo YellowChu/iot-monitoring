@@ -1,6 +1,27 @@
 <template>
 <div class="row home-sensor-data" style="text-align: left">
-    <div class="row" style="margin-top: 1rem;">
+    <div id="accordion" style="margin-top: 1rem;">
+        <div class="card">
+            <div class="card-header" data-bs-toggle="collapse" href="#data_settings_collapse" style="cursor: pointer;">
+                <a class="btn">
+                    <font-awesome-icon :icon="['fas', 'sliders-h']"/>
+                    Configure displayed data
+                </a>
+            </div>
+            <div id="data_settings_collapse" class="collapse show" data-bs-parent="#accordion">
+                <div class="card-body">
+                    <home_sensor_configure_data
+                        :current_n="props.displayed_uplinks_count"
+                        :max_n="props.uplinks_count"
+                        :display_temp="props.display_temperature"
+                        :display_pres="props.display_pressure"
+                    ></home_sensor_configure_data>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="props.display_temperature" class="row" style="margin-top: 2rem;">
         <h4>Temperature readings</h4>
 
         <div class="col-8" style="margin-top: 1rem;">
@@ -33,7 +54,7 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top: 2rem;">
+    <div v-if="props.display_pressure" class="row" style="margin-top: 2rem;">
         <h4>Pressure readings</h4>
 
         <div class="col-8" style="margin-top: 1rem;">
@@ -109,11 +130,16 @@ import moment from "moment";
 import { inject, defineProps } from "vue";
 
 import line_chart from "@/components/data_presentation/line_chart.vue";
+import home_sensor_configure_data from "@/components/home_sensor_components/home_sensor_configure_data.vue";
 
 
 // init
 const props = defineProps({
     data_list: Array,
+    uplinks_count: Number,
+    displayed_uplinks_count: Number,
+    display_temperature: Boolean,
+    display_pressure: Boolean,
 })
 
 const update_room_sensor = inject("update_room_sensor");

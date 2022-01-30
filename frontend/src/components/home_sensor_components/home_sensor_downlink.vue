@@ -44,7 +44,7 @@
                             >
                         </div>
                     </div>
-                    <div v-if="user_state.is_authenticated" class="mb-3">
+                    <div v-if="user_state.is_authenticated" class="d-flex flex-row-reverse bd-highlight mb-3">
                         <button class="btn btn-primary" :disabled="!enable_downlink" @click="show_downlink_modal=true">Schedule downlink</button>
                     </div>
                     <div v-else>

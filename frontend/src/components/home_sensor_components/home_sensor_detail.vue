@@ -3,7 +3,7 @@
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <router-link
-                    :to="{ name: 'home_sensor_data', params: { device_id: room_sensor.id } }"
+                    :to="{ name: 'home_sensor_data', params: { device_id: props.room_sensor.id } }"
                     class="nav-link"
                     :class="{active: route.name==='home_sensor_data'}"
                 >
@@ -12,7 +12,7 @@
             </li>
             <li class="nav-item">
                 <router-link
-                    :to="{ name: 'home_sensor_downlink', params: { device_id: room_sensor.id } }"
+                    :to="{ name: 'home_sensor_downlink', params: { device_id: props.room_sensor.id } }"
                     class="nav-link"
                     :class="{active: route.name==='home_sensor_downlink'}"
                 >
@@ -21,7 +21,7 @@
             </li>
             <li class="nav-item">
                 <router-link
-                    :to="{ name: 'home_sensor_settings', params: { device_id: room_sensor.id } }"
+                    :to="{ name: 'home_sensor_settings', params: { device_id: props.room_sensor.id } }"
                     class="nav-link"
                     :class="{active: route.name==='home_sensor_settings'}"
                 >
@@ -31,9 +31,13 @@
         </ul>
 
         <router-view
-            :data_list="room_sensor.sensor_data_list"
-            :sensor_name="room_sensor.device_name"
-            :sensor_description="room_sensor.device_description"
+            :data_list="props.room_sensor.sensor_data_list"
+            :uplinks_count="props.room_sensor.uplinks_count"
+            :displayed_uplinks_count="props.room_sensor.displayed_uplinks_count"
+            :display_temperature="props.room_sensor.display_temperature"
+            :display_pressure="props.room_sensor.display_pressure"
+            :sensor_name="props.room_sensor.device_name"
+            :sensor_description="props.room_sensor.device_description"
         >
         </router-view>
     </div>
@@ -46,7 +50,7 @@
 </style>
 
 <script setup>
-import { defineProps, toRefs } from "vue";
+import { defineProps } from "vue";
 import { useRoute } from "vue-router";
 
 
@@ -55,6 +59,4 @@ const route = useRoute()
 const props = defineProps({
     room_sensor: Object,
 })
-
-const { room_sensor } = toRefs(props);
 </script>

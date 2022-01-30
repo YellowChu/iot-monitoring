@@ -11,9 +11,11 @@
                 <textarea class="form-control" rows="3" v-model="description"></textarea>
             </div>
             <div class="mb-3">
-                <div v-if="user_state.is_authenticated" class="btn-group" role="group" aria-label="Basic example">
-                    <button type="submit" class="btn btn-primary" :class="{ disabled: !data.enable_save }">Save Changes</button>
-                    <button class="btn btn-danger" @click="data.show_delete_modal=true">Delete Sensor</button>
+                <div v-if="user_state.is_authenticated" class="d-flex flex-row-reverse bd-highlight mb-3">
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-success" :class="{ disabled: !data.enable_save }">Save Changes</button>
+                        <button class="btn btn-danger" @click="data.show_delete_modal=true">Delete Sensor</button>
+                    </div>
                 </div>
                 <div v-else>
                     <unlogged_warning/>

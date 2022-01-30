@@ -22,14 +22,14 @@
         <div v-if="!user_state.is_authenticated" class="user-nav me-auto">
             <ul class="navbar-nav">
                 <li class="nav-item text-white">
-                    <router-link :to="{ name: 'user_login' }" class="nav-link"><font-awesome-icon :icon="['fas', 'sign-in-alt']" /> Login</router-link>
+                    <router-link :to="{ name: 'user_login' }" class="nav-link"><font-awesome-icon :icon="['fas', 'sign-in-alt']"/> Login</router-link>
                 </li>
             </ul>
         </div>
         <div v-else class="user-nav me-auto">
             <ul class="navbar-nav">
                 <li class="nav-item text-white" style="cursor: pointer;">
-                    <a @click="logout()"><font-awesome-icon :icon="['fas', 'sign-out-alt']" /> Logout</a>
+                    <a @click="logout()"><font-awesome-icon :icon="['fas', 'sign-out-alt']"/> Logout</a>
                 </li>
             </ul>
         </div>
@@ -78,8 +78,6 @@ import router from "@/router";
 const user_state = inject("user_state");
 const remove_token = inject("remove_token");
 
-console.log(user_state.token);
-console.log(user_state.is_authenticated);
 
 function logout() {
     axios

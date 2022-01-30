@@ -7,10 +7,23 @@ from rest_framework import serializers
 
 class RoomSensorSerializer(serializers.ModelSerializer):
     sensor_data_list = serializers.SerializerMethodField()
+    uplinks_count = serializers.SerializerMethodField()
+    displayed_uplinks_count = serializers.SerializerMethodField()
 
     class Meta:
         model = RoomSensor
-        fields = ["id", "device_id", "device_name", "device_description", "sensor_data_list"]
+        fields = [
+            "id",
+            "device_id",
+            "device_name",
+            "device_description",
+            "sensor_data_list",
+            "uplinks_count",
+            "displayed_uplinks_number",
+            "displayed_uplinks_count",
+            "display_temperature",
+            "display_pressure",
+        ]
 
     def get_sensor_data_list(self, room_sensor):
         sensor_data_list = []
@@ -138,7 +151,12 @@ class RoomSensorSerializer(serializers.ModelSerializer):
                 },
             ]
         else:
-            for uplink in room_sensor.uplinks.all():
+            if room_sensor.displayed_uplinks_number == None:
+                qs = room_sensor.uplinks.all()
+            else:
+                qs = room_sensor.uplinks.all()[:room_sensor.displayed_uplinks_number]
+
+            for uplink in qs:
                 pressure, temperature, battery = room_sensor.parse_uplink_payload(uplink.payload)
                 sensor_data = {
                     "time": uplink.received_at or uplink.created,
@@ -148,3 +166,12 @@ class RoomSensorSerializer(serializers.ModelSerializer):
                 }
                 sensor_data_list.append(sensor_data)
         return sensor_data_list
+
+    def get_uplinks_count(self, room_sensor):
+        return room_sensor.uplinks.count()
+
+    def get_displayed_uplinks_count(self, room_sensor):
+        if room_sensor.displayed_uplinks_number == None:
+            return room_sensor.uplinks.count()
+        else:
+            return room_sensor.displayed_uplinks_number
