@@ -104,10 +104,10 @@ th     { background:#eee; }
 </style>
 
 <script setup>
-/* eslint-disable */
+import moment from "moment";
+
 import { inject, defineProps } from "vue";
 
-import moment from "moment";
 import line_chart from "@/components/data_presentation/line_chart.vue";
 
 

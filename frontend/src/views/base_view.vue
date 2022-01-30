@@ -22,14 +22,14 @@
         <div v-if="!user_state.is_authenticated" class="user-nav me-auto">
             <ul class="navbar-nav">
                 <li class="nav-item text-white">
-                    <router-link :to="{ name: 'user_login' }" class="nav-link">Login</router-link>
+                    <router-link :to="{ name: 'user_login' }" class="nav-link"><font-awesome-icon :icon="['fas', 'sign-in-alt']" /> Login</router-link>
                 </li>
             </ul>
         </div>
         <div v-else class="user-nav me-auto">
             <ul class="navbar-nav">
-                <li class="nav-item text-white">
-                    <a @click="logout()">Logout</a>
+                <li class="nav-item text-white" style="cursor: pointer;">
+                    <a @click="logout()"><font-awesome-icon :icon="['fas', 'sign-out-alt']" /> Logout</a>
                 </li>
             </ul>
         </div>
@@ -53,9 +53,18 @@
 }
 .router-link-active {
     font-weight: bold;
+    background: grey;
+    border-radius: 0.5rem;
 }
 .router_view_container {
     margin-top: 5rem;
+}
+
+.nav-item {
+    color: white;
+}
+.nav-item:hover {
+    font-weight: bold;
 }
 </style>
 
@@ -63,6 +72,7 @@
 import axios from "axios";
 
 import { inject } from "vue";
+import router from "@/router";
 
 
 const user_state = inject("user_state");
@@ -76,6 +86,7 @@ function logout() {
         .post("/auth-api/token/logout/", user_state.token)
         .then(() => {
             remove_token();
+            router.push({ name: 'user_login' });
         })
 }
 </script>

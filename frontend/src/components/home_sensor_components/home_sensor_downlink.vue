@@ -44,8 +44,11 @@
                             >
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <div v-if="user_state.is_authenticated" class="mb-3">
                         <button class="btn btn-primary" :disabled="!enable_downlink" @click="show_downlink_modal=true">Schedule downlink</button>
+                    </div>
+                    <div v-else>
+                        <unlogged_warning/>
                     </div>
                 </form>
             </div>
@@ -113,9 +116,10 @@
 <script setup>
 import axios from "axios";
 
-import { ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 
 import modal_window from "@/components/ui/modal_window.vue";
+import unlogged_warning from "@/components/user/unlogged_warning.vue";
 
 
 let spreading_factor = ref("Unchanged");
@@ -127,6 +131,8 @@ let enable_downlink = ref(false);
 let show_downlink_modal = ref(false);
 let modal_err_msg = ref("");
 let downlink_successfull = ref(false);
+
+const user_state = inject("user_state");
 
 const sf_sleep = {
     "Unchanged": "unknown",

@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faLock, faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 
@@ -16,5 +16,7 @@ axios.defaults.baseURL = (window.location.protocol === "https:" ? "https://iot-m
 
 library.add(faUser);
 library.add(faLock);
+library.add(faSignInAlt);
+library.add(faSignOutAlt);
 
 createApp(App).use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

@@ -2,6 +2,9 @@
 <div class="row align-items-center justify-content-center" style="margin-top: 25rem;">
     <div class="login-card card" style="width: 30rem; padding-top: 1rem;">
         <div class="card-body" style="text-align: left;">
+            <div v-if="form_err_msg" class="alert alert-danger" role="alert">
+                {{ form_err_msg }}
+            </div>
             <form @submit.prevent="login_submit()">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -32,11 +35,14 @@
 
 <script setup>
 import axios from "axios";
+
 import { inject, ref } from "vue";
+import router from "@/router";
 
 
 let username = ref("");
 let password = ref("");
+let form_err_msg = ref("");
 
 const user_state_set_token = inject("set_token");
 
@@ -57,9 +63,15 @@ function login_submit() {
 
             axios.defaults.headers.common["Authorization"] = "Token " + token;
             localStorage.setItem("token", token);
+
+            router.go(-1);
         })
         .catch((err) => {
-            alert(err);
+            if (err.response.status == 400) {
+                form_err_msg.value = "Wrong username or password."
+            } else {
+                alert(err);
+            }
         })
 }
 </script>
