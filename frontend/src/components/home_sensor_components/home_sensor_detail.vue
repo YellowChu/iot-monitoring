@@ -12,11 +12,11 @@
             </li>
             <li class="nav-item">
                 <router-link
-                    :to="{ name: 'home_sensor_command', params: { device_id: room_sensor.id } }"
+                    :to="{ name: 'home_sensor_downlink', params: { device_id: room_sensor.id } }"
                     class="nav-link"
-                    :class="{active: route.name==='home_sensor_command'}"
+                    :class="{active: route.name==='home_sensor_downlink'}"
                 >
-                    Issue command
+                    Schedule downlink
                 </router-link>
             </li>
             <li class="nav-item">

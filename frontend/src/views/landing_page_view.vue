@@ -139,7 +139,6 @@ export default {
     methods: {
         async change_menu (str) {
             // sleep is to wait for the animation to finish/start
-            console.log("?");
             if (str == "default") {
                 this.picked = false;
                 await sleep(500);

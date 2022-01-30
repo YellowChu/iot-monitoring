@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import home_sensor_list from "@/components/home_sensor_components/home_sensor_list.vue"
 import home_sensor_about from "@/components/home_sensor_components/home_sensor_about.vue"
 import home_sensor_data from "@/components/home_sensor_components/home_sensor_data.vue"
-import home_sensor_command from "@/components/home_sensor_components/home_sensor_command.vue"
+import home_sensor_downlink from "@/components/home_sensor_components/home_sensor_downlink.vue"
 import home_sensor_settings from "@/components/home_sensor_components/home_sensor_settings.vue"
 
 const routes = [
@@ -15,13 +15,14 @@ const routes = [
         children: [
             {
                 path: ":device_id/data",
+                alias: ":device_id/",
                 name: "home_sensor_data",
                 component: home_sensor_data
             },
             {
-                path: ":device_id/command",
-                name: "home_sensor_command",
-                component: home_sensor_command
+                path: ":device_id/downlink",
+                name: "home_sensor_downlink",
+                component: home_sensor_downlink
             },
             {
                 path: ":device_id/settings",
