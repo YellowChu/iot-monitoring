@@ -7,7 +7,7 @@
             </div>
             <input type="number" class="form-control" :max="props.max_n" v-model="n">
         </div>
-        <input type="range" class="w-100" min="0" :max="props.max_n"  :value="n">
+        <input type="range" id="range_slider" class="w-100" min="0" :max="props.max_n" v-model="n">
 
         <div class="form-check mt-4">
             <label class="form-check-label">Show temperature readings</label>
@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-/* eslint-disable */
 import axios from "axios";
 
 import { defineProps, inject, ref, watch } from 'vue';
@@ -45,6 +44,7 @@ const props = defineProps({
     display_pres: Boolean,
 })
 
+// TODO: fix bug, range slider keeps resetting when moving through tabs
 let n = ref(props.current_n);
 let show_temp = ref(props.display_temp);
 let show_pres = ref(props.display_pres);
@@ -60,7 +60,6 @@ watch(() => [props.current_n, props.display_temp, props.display_pressure], () =>
 
 
 function update_form() {
-    console.log("wtf", props)
     n.value = props.current_n;
     show_temp.value = props.display_temp;
     show_pres.value = props.display_pres;

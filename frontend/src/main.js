@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 axios.defaults.baseURL = (window.location.protocol === "https:" ? "https://iot-monitored.herokuapp.com" : "http://localhost:8000")
 
+// TODO: move font awesome elsewhere
 library.add(faUser);
 library.add(faLock);
 library.add(faSignInAlt);
