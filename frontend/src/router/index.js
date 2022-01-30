@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import home_sensor_list from "@/components/home_sensor_components/home_sensor_list.vue"
-import home_sensor_about from "@/components/home_sensor_components/home_sensor_about.vue"
 import home_sensor_data from "@/components/home_sensor_components/home_sensor_data.vue"
 import home_sensor_downlink from "@/components/home_sensor_components/home_sensor_downlink.vue"
 import home_sensor_settings from "@/components/home_sensor_components/home_sensor_settings.vue"
+
+import home_sensor_about from "@/components/home_sensor_components/home_sensor_about.vue"
+
+import user_login from "@/components/user/user_login.vue"
 
 const routes = [
     {
@@ -35,6 +38,11 @@ const routes = [
         path: "/about",
         name: "home_sensor_about",
         component: home_sensor_about,
+    },
+    {
+        path: "/login",
+        name: "user_login",
+        component: user_login,
     },
 ];
 

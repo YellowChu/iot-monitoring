@@ -8,7 +8,11 @@ from apps.sensor import urls as sensor_urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    re_path(r"^auth-api/", include("djoser.urls")),
+    re_path(r"^auth-api/", include("djoser.urls.authtoken")),
+
     re_path(r"^api/v1/", include(urls_api)),
     re_path(r"^sensor/", include(sensor_urls)),
+
     re_path(r"^(?!admin).*$", TemplateView.as_view(template_name="index.html")),
 ]

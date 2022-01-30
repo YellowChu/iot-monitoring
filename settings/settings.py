@@ -33,9 +33,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "iot-monitored.herokuapp.com"]
 
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://localhost:8080", "https://iot-monitored.herokuapp.com"]
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    )
+}
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,8 +53,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # dev add ons
     "channels",
+    "corsheaders",
     "django_extensions",
+    "djoser",
     "rest_framework",
+    "rest_framework.authtoken",
     "whitenoise.runserver_nostatic",
     # my apps
     "apps.sensor",
@@ -57,6 +68,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -183,4 +195,6 @@ TTN_MQTT_TLS_ADDRESS_PORT = 8883
 # TTN
 TTN_APP_NAME = os.getenv("TTN_APP_NAME")
 TTN_API_KEY = os.getenv("TTN_API_KEY")
+TTN_POST_BEARER = os.getenv("TTN_POST_BEARER")
+TTN_DL_URL = os.getenv("TTN_DL_URL")
 TTN_DEVICE_ID = os.getenv("TTN_DEVICE_ID")

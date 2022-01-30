@@ -1,6 +1,6 @@
 <template>
 <div class="base">
-    <HomeSensorView></HomeSensorView>
+    <base_view></base_view>
 </div>
 </template>
 
@@ -33,8 +33,53 @@
 </style>
 
 <script setup>
-// sans-serif
+import axios from "axios";
+
+import base_view from "@/views/base_view.vue"
+import { provide, reactive, readonly } from "vue";
+
+// user auth storage
+// TODO: move somewhere else
+let user_state = reactive({
+    token: "",
+    is_authenticated: false,
+})
 
 
-import HomeSensorView from "@/views/home_sensor_views/home_sensor_base_view.vue"
+initialize_user();
+const token = user_state.token;
+
+if (token) {
+    axios.defaults.headers.common["Authorization"] = "Token " + token;
+} else {
+    axios.defaults.headers.common["Authorization"] = "";
+}
+
+function initialize_user() {
+    if (localStorage.getItem("token")) {
+        user_state.token = localStorage.getItem("token");
+        user_state.is_authenticated = true;
+    } else {
+        user_state.token = "";
+        user_state.is_authenticated = false;
+    }
+}
+
+function set_token(token) {
+    user_state.token = token;
+    user_state.is_authenticated = true;
+}
+
+function remove_token() {
+    user_state.token = "";
+    user_state.is_authenticated = false;
+
+    localStorage.removeItem("token");
+    axios.defaults.headers.common["Authorization"] = "";
+}
+
+provide("user_state", readonly(user_state));
+provide("initialize_user", initialize_user);
+provide("set_token", set_token);
+provide("remove_token", remove_token);
 </script>

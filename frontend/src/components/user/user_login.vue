@@ -1,0 +1,65 @@
+<template>
+<div class="row align-items-center justify-content-center" style="margin-top: 25rem;">
+    <div class="login-card card" style="width: 30rem; padding-top: 1rem;">
+        <div class="card-body" style="text-align: left;">
+            <form @submit.prevent="login_submit()">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="height: 3rem;"><font-awesome-icon :icon="['fas', 'user']" /></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" v-model="username">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="height: 3rem;"><font-awesome-icon :icon="['fas', 'lock']" /></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" v-model="password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+</template>
+
+<style>
+.login-card {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+</style>
+
+<script setup>
+import axios from "axios";
+import { inject, ref } from "vue";
+
+
+let username = ref("");
+let password = ref("");
+
+const user_state_set_token = inject("set_token");
+
+
+function login_submit() {
+    let request_data = {
+        username: username.value,
+        password: password.value,
+    }
+
+    axios
+        .post("/auth-api/token/login", request_data)
+        .then((resp) => {
+            console.log(resp);
+
+            const token = resp.data.auth_token;
+            user_state_set_token(token);
+
+            axios.defaults.headers.common["Authorization"] = "Token " + token;
+            localStorage.setItem("token", token);
+        })
+        .catch((err) => {
+            alert(err);
+        })
+}
+</script>

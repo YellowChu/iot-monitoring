@@ -9,11 +9,27 @@
         </button>
         <div class="main-nav collapse navbar-collapse nav justify-content-center" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item text-white">
                         <router-link :to="{ name: 'home_sensor_list' }" class="nav-link active">Room Sensor</router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item text-white">
                         <router-link :to="{ name: 'home_sensor_about' }" class="nav-link">About</router-link>
+                </li>
+            </ul>
+        </div>
+
+
+        <div v-if="!user_state.is_authenticated" class="user-nav me-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item text-white">
+                    <router-link :to="{ name: 'user_login' }" class="nav-link">Login</router-link>
+                </li>
+            </ul>
+        </div>
+        <div v-else class="user-nav me-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item text-white">
+                    <a @click="logout()">Logout</a>
                 </li>
             </ul>
         </div>
@@ -43,6 +59,23 @@
 }
 </style>
 
-<script>
+<script setup>
+import axios from "axios";
 
+import { inject } from "vue";
+
+
+const user_state = inject("user_state");
+const remove_token = inject("remove_token");
+
+console.log(user_state.token);
+console.log(user_state.is_authenticated);
+
+function logout() {
+    axios
+        .post("/auth-api/token/logout/", user_state.token)
+        .then(() => {
+            remove_token();
+        })
+}
 </script>
