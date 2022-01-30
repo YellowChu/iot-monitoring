@@ -8,7 +8,7 @@ RUN npm --prefix frontend install
 RUN npm --prefix frontend run build
 
 
-FROM python:3.7-slim
+FROM python:3.8-slim
 
 RUN apt-get update && apt-get install build-essential -y
 
