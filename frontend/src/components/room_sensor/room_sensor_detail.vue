@@ -3,27 +3,27 @@
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <router-link
-                    :to="{ name: 'home_sensor_data', params: { device_id: props.room_sensor.id } }"
+                    :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
                     class="nav-link"
-                    :class="{active: route.name==='home_sensor_data'}"
+                    :class="{active: route.name==='room_sensor_data'}"
                 >
                     Data
                 </router-link>
             </li>
             <li class="nav-item">
                 <router-link
-                    :to="{ name: 'home_sensor_downlink', params: { device_id: props.room_sensor.id } }"
+                    :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
                     class="nav-link"
-                    :class="{active: route.name==='home_sensor_downlink'}"
+                    :class="{active: route.name==='room_sensor_downlink'}"
                 >
                     Schedule downlink
                 </router-link>
             </li>
             <li class="nav-item">
                 <router-link
-                    :to="{ name: 'home_sensor_settings', params: { device_id: props.room_sensor.id } }"
+                    :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
                     class="nav-link"
-                    :class="{active: route.name==='home_sensor_settings'}"
+                    :class="{active: route.name==='room_sensor_settings'}"
                 >
                     Settings
                 </router-link>

@@ -1,43 +1,43 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import home_sensor_list from "@/components/home_sensor_components/home_sensor_list.vue"
-import home_sensor_data from "@/components/home_sensor_components/home_sensor_data.vue"
-import home_sensor_downlink from "@/components/home_sensor_components/home_sensor_downlink.vue"
-import home_sensor_settings from "@/components/home_sensor_components/home_sensor_settings.vue"
+import room_sensor_view from "@/views/room_sensor_view.vue"
+import about_view from "@/views/about_view.vue"
 
-import home_sensor_about from "@/components/home_sensor_components/home_sensor_about.vue"
+import room_sensor_data from "@/components/room_sensor/room_sensor_data.vue"
+import room_sensor_downlink from "@/components/room_sensor/room_sensor_downlink.vue"
+import room_sensor_settings from "@/components/room_sensor/room_sensor_settings.vue"
 
 import user_login from "@/components/user/user_login.vue"
 
 const routes = [
     {
-        path: "/list",
+        path: "/room_sensor",
         alias: "/",
-        name: "home_sensor_list",
-        component: home_sensor_list,
+        name: "room_sensor_view",
+        component: room_sensor_view,
         children: [
             {
                 path: ":device_id/data",
                 alias: ":device_id/",
-                name: "home_sensor_data",
-                component: home_sensor_data
+                name: "room_sensor_data",
+                component: room_sensor_data
             },
             {
                 path: ":device_id/downlink",
-                name: "home_sensor_downlink",
-                component: home_sensor_downlink
+                name: "room_sensor_downlink",
+                component: room_sensor_downlink
             },
             {
                 path: ":device_id/settings",
-                name: "home_sensor_settings",
-                component: home_sensor_settings
+                name: "room_sensor_settings",
+                component: room_sensor_settings
             },
         ]
     },
     {
         path: "/about",
-        name: "home_sensor_about",
-        component: home_sensor_about,
+        name: "about_view",
+        component: about_view,
     },
     {
         path: "/login",

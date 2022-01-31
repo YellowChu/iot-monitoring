@@ -3,7 +3,7 @@
         <div class="main-container">
             <transition name="fade">
                 <div v-if="!picked" class="main-menu">
-                    <router-link to="/home_sensor" class="left-nav" :class="menu" @click="change_menu('left')">
+                    <router-link to="/room_sensor" class="left-nav" :class="menu" @click="change_menu('left')">
                         <div>
                             <img class="icon" src="@/assets/sensor-icon.svg">
                             <h1 class="icon_text">Home Sensor</h1>

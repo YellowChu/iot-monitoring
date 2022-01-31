@@ -117,7 +117,7 @@ function delete_room_sensor() {
         .then(() => {
             data.show_delete_modal = false;
             update_room_sensor();
-            router.push({ name: 'home_sensor_list' });
+            router.push({ name: 'room_sensor_view' });
         })
         .catch((err) => {
             alert(err);

@@ -10,12 +10,12 @@
             </div>
             <div id="data_settings_collapse" class="collapse show" data-bs-parent="#accordion">
                 <div class="card-body">
-                    <home_sensor_configure_data
+                    <room_sensor_configure_data
                         :current_n="props.displayed_uplinks_count"
                         :max_n="props.uplinks_count"
                         :display_temp="props.display_temperature"
                         :display_pres="props.display_pressure"
-                    ></home_sensor_configure_data>
+                    ></room_sensor_configure_data>
                 </div>
             </div>
         </div>
@@ -130,7 +130,7 @@ import moment from "moment";
 import { inject, defineProps } from "vue";
 
 import line_chart from "@/components/data_presentation/line_chart.vue";
-import home_sensor_configure_data from "@/components/home_sensor_components/home_sensor_configure_data.vue";
+import room_sensor_configure_data from "@/components/room_sensor/room_sensor_configure_data.vue";
 
 
 // init

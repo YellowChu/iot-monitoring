@@ -33,7 +33,7 @@
             </div>
 
             <div v-if="data.displayed_device">
-                <home_sensor_detail :room_sensor="data.displayed_device"></home_sensor_detail>
+                <room_sensor_detail :room_sensor="data.displayed_device"></room_sensor_detail>
             </div>
         </div>
     </div>
@@ -119,7 +119,7 @@ import { inject, onMounted, provide, reactive, watch } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
 
-import home_sensor_detail from "@/components/home_sensor_components/home_sensor_detail.vue"
+import room_sensor_detail from "@/components/room_sensor/room_sensor_detail.vue"
 import modal_window from "@/components/ui/modal_window.vue";
 
 
@@ -203,10 +203,10 @@ function create_room_sensor() {
 function change_displayed_device(device) {
     if (data.displayed_device.id == device.id) {
         data.displayed_device = {};
-        router.push({ name: 'home_sensor_list' });
+        router.push({ name: 'room_sensor_view' });
     } else {
         data.displayed_device = device;
-        router.push({ name: 'home_sensor_data', params: { device_id: device.id } });
+        router.push({ name: 'room_sensor_data', params: { device_id: device.id } });
     }
     console.log(data.displayed_device);
 }

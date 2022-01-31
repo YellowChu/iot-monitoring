@@ -1,5 +1,5 @@
 <template>
-<div class="home_sensor_view">
+<div class="room_sensor_view">
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand">
             <b>IoT Gardienne</b>
@@ -10,10 +10,10 @@
         <div class="main-nav collapse navbar-collapse nav justify-content-center" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item text-white">
-                        <router-link :to="{ name: 'home_sensor_list' }" class="nav-link active">Room Sensor</router-link>
+                        <router-link :to="{ name: 'room_sensor_view' }" class="nav-link active">Room Sensor</router-link>
                 </li>
                 <li class="nav-item text-white">
-                        <router-link :to="{ name: 'home_sensor_about' }" class="nav-link">About</router-link>
+                        <router-link :to="{ name: 'about_view' }" class="nav-link">About</router-link>
                 </li>
             </ul>
         </div>
