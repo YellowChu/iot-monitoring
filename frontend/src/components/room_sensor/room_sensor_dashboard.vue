@@ -1,6 +1,5 @@
 <template>
 <div class="container-fluid">
-    <h1 class="mt-4" style="text-align: left;">Daily reports</h1>
     <div class="row mt-3" style="text-align: left;">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2" style="border-left: 8px solid rgb(28, 28, 28);">
