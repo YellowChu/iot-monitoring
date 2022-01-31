@@ -152,11 +152,11 @@ class RoomSensorSerializer(serializers.ModelSerializer):
             ]
         else:
             if room_sensor.displayed_uplinks_number == None:
-                qs = room_sensor.uplinks.all()
+                uplinks = room_sensor.uplinks.all()
             else:
-                qs = room_sensor.uplinks.all()[:room_sensor.displayed_uplinks_number]
+                uplinks = room_sensor.uplinks.all()[:room_sensor.displayed_uplinks_number]
 
-            for uplink in qs:
+            for uplink in uplinks:
                 pressure, temperature, battery = room_sensor.parse_uplink_payload(uplink.payload)
                 sensor_data = {
                     "time": uplink.received_at or uplink.created,

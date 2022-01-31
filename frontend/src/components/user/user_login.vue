@@ -19,7 +19,9 @@
                     <input type="password" class="form-control" placeholder="Password" v-model="password">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Login</button>
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
             </form>
         </div>
     </div>

@@ -5,7 +5,7 @@
             <div class="card-header" data-bs-toggle="collapse" href="#data_settings_collapse" style="cursor: pointer;">
                 <a class="btn">
                     <font-awesome-icon :icon="['fas', 'sliders-h']"/>
-                    Configure displayed data
+                    Additional options
                 </a>
             </div>
             <div id="data_settings_collapse" class="collapse show" data-bs-parent="#accordion">

@@ -1,13 +1,19 @@
 import codecs
+import csv
 import json
+import pytz
 import requests
+from dateutil.parser import parse as parse_date
 
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 
 from rest_framework.authtoken.models import Token
 
+from apps.sensor.models import RoomSensor
 
+
+# TODO: make function decorator
 def token_authorized(request):
     token_key = request.META["HTTP_AUTHORIZATION"]
     token_key = token_key.replace("Token ", "")
@@ -58,6 +64,66 @@ def schedule_downlink(request):
         if response.status_code == 200:
             return JsonResponse({"status": "ok"})
         else:
-            return JsonResponse({"status": "ttnnok"})
+            return JsonResponse({"status": "ttn_nok"})
     else:
-        return JsonResponse({"status": "usernok"})
+        return JsonResponse({"status": "user_nok"})
+
+
+def export_room_sensor_uplinks(request, pk):
+    if token_authorized(request):
+        room_sensor = RoomSensor.objects.filter(pk=pk).first()
+        if not room_sensor:
+            return JsonResponse({"status": "user_nok"})
+
+        from_date = request.GET.get("export_from", "")
+        to_date = request.GET.get("export_to", "")
+        export_temp = request.GET.get("export_temp", False)
+        export_pres = request.GET.get("export_pres", False)
+
+        export_temp = True if export_temp == "true" else False
+        export_pres = True if export_pres == "true" else False
+        if not export_temp and not export_pres:
+            return JsonResponse({"status": "req_nok"})
+
+        if not from_date:
+            from_datetime = room_sensor.uplinks.last().received_at
+        else:
+            from_datetime = parse_date(from_date)
+            from_datetime = pytz.timezone("Europe/Prague").localize(from_datetime)
+
+        if not to_date:
+            to_datetime = room_sensor.uplinks.first().received_at
+        else:
+            to_datetime = parse_date(to_date)
+            to_datetime = pytz.timezone("Europe/Prague").localize(to_datetime)
+
+        # prepare csv
+        response = HttpResponse(
+            content_type='text/csv',
+            headers={'Content-Disposition': 'attachment; filename="room_sensor_export.csv"'},
+        )
+
+        headers = ["Date time"]
+        if export_temp:
+            headers.append("Temperature [°C]")
+        if export_pres:
+            headers.append("Pressure [kPa]")
+
+        writer = csv.writer(response)
+        writer.writerow(headers)
+
+        uplinks = room_sensor.uplinks.filter(received_at__range=[from_datetime, to_datetime])
+
+        for uplink in uplinks:
+            pressure, temperature, _ = room_sensor.parse_uplink_payload(uplink.payload)
+            row = [uplink.received_at.strftime("%d.%m.%Y %H:%M")]
+            if export_temp:
+                row.append(round(temperature, 2))
+            if export_pres:
+                row.append(round((pressure / 1000), 2))
+            
+            writer.writerow(row)
+        
+        return response
+    else:
+        return JsonResponse({"status": "user_nok"})

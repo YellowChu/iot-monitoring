@@ -1,7 +1,7 @@
 <template>
 <div class="home-sensor-settings" style="margin-top: 1rem;">
     <div class="row">
-        <form class="sensor-form" @submit.prevent="save_changes()">
+        <form class="sensor-form" @submit.prevent>
             <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="text" class="form-control" v-model="name">
@@ -13,7 +13,7 @@
             <div class="mb-3">
                 <div v-if="user_state.is_authenticated" class="d-flex flex-row-reverse bd-highlight mb-3">
                     <div class="btn-group" role="group">
-                        <button type="submit" class="btn btn-success" :class="{ disabled: !data.enable_save }">Save Changes</button>
+                        <button type="submit" class="btn btn-success" :class="{ disabled: !data.enable_save }" @click="save_changes()">Save Changes</button>
                         <button class="btn btn-danger" @click="data.show_delete_modal=true">Delete Sensor</button>
                     </div>
                 </div>
