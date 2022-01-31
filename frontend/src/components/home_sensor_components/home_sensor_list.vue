@@ -115,7 +115,7 @@
 <script setup>
 import axios from "axios"
 
-import { onMounted, provide, reactive, watch } from "vue";
+import { inject, onMounted, provide, reactive, watch } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
 
@@ -137,6 +137,8 @@ let data = reactive({
 })
 
 const route = useRoute()
+const remove_token = inject("remove_token");
+
 provide("update_room_sensor", get_room_sensor);
 
 
@@ -161,6 +163,11 @@ function get_room_sensor() {
                     return sensor.id == route.params.device_id
                 })
                 data.displayed_device = found_sensor[0];
+            }
+        })
+        .catch((err) => {
+            if (err.response.data && err.response.status == 401) {
+                remove_token();
             }
         })
 }

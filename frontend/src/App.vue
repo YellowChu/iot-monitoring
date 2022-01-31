@@ -40,6 +40,7 @@ import { provide, reactive, readonly } from "vue";
 
 // user auth storage
 // TODO: move somewhere else
+// TODO: when opening site check if token is working if not remove it
 let user_state = reactive({
     token: "",
     is_authenticated: false,
