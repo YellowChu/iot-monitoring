@@ -206,7 +206,7 @@ function change_displayed_device(device) {
         router.push({ name: 'room_sensor_view' });
     } else {
         data.displayed_device = device;
-        router.push({ name: 'room_sensor_data', params: { device_id: device.id } });
+        router.push({ name: 'room_sensor_dashboard', params: { device_id: device.id } });
     }
     console.log(data.displayed_device);
 }

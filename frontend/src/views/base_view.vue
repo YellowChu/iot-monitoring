@@ -2,7 +2,8 @@
 <div class="room_sensor_view">
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark p-0" style="height: 5rem;">
         <a class="navbar-brand">
-            <img class="icon me-4" src="@/assets/logo.png" style="width: 230;">
+            <!-- <img class="icon me-4" src="@/assets/logo.png" style="width: 230;"> -->
+            <strong>IoT Gardienne</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

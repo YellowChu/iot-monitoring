@@ -3,6 +3,15 @@
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <router-link
+                    :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
+                    class="nav-link"
+                    :class="{active: route.name==='room_sensor_dashboard'}"
+                >
+                    Dashboard
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link
                     :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
                     class="nav-link"
                     :class="{active: route.name==='room_sensor_data'}"

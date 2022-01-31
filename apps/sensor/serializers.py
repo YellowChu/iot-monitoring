@@ -1,8 +1,10 @@
 from random import randint
 
+from django.utils import timezone
+from rest_framework import serializers
+
 from apps.sensor.models import RoomSensor
 
-from rest_framework import serializers
 
 
 class RoomSensorSerializer(serializers.ModelSerializer):
@@ -175,3 +177,49 @@ class RoomSensorSerializer(serializers.ModelSerializer):
             return room_sensor.uplinks.count()
         else:
             return room_sensor.displayed_uplinks_number
+
+
+class RoomSensorUplinksSerializer(serializers.ModelSerializer):
+    uplinks_data = serializers.SerializerMethodField()
+    last_battery_reading = serializers.SerializerMethodField()
+    last_sf_reading = serializers.SerializerMethodField()
+
+    class Meta:
+        model = RoomSensor
+        fields = [
+            "id",
+            "uplinks_data",
+            "last_battery_reading",
+            "last_sf_reading",
+        ]
+    
+    def get_uplinks_data(self, room_sensor):
+        uplinks = room_sensor.uplinks.filter(
+            received_at__gte=timezone.now().replace(hour=0, minute=0, second=0),
+            received_at__lte=timezone.now().replace(hour=23, minute=59, second=59)
+        )
+
+        uplink_data = [
+            {
+                "received_at": uplink.received_at or uplink.created,
+                "spreading_factor": uplink.spreading_factor,
+                "consumed_airtime": uplink.consumed_airtime,
+            } 
+            for uplink in uplinks
+        ]
+        return uplink_data
+
+    def get_last_battery_reading(self, room_sensor):
+        last_uplink = room_sensor.uplinks.first()
+        if last_uplink:
+            _,_, battery = room_sensor.parse_uplink_payload(last_uplink.payload)
+            return battery
+        else:
+            return None
+
+    def get_last_sf_reading(self, room_sensor):
+        last_uplink = room_sensor.uplinks.first()
+        if last_uplink:
+            return last_uplink.spreading_factor
+        else:
+            return None
