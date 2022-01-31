@@ -96,11 +96,9 @@
 </template>
 
 <script setup>
-/* eslint-disable */
 import axios from "axios"
 
-import { inject, onMounted, reactive } from "vue";
-import router from "@/router";
+import { onMounted, reactive, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import donut_chart from "@/components/data_presentation/donut_chart.vue"
@@ -116,6 +114,12 @@ let dashboard_data = reactive({
 
 const route = useRoute()
 
+watch(() => route.params.device_id, () => {
+    console.log("?");
+    get_uplinks();
+})
+
+
 onMounted(() => {
     get_uplinks();
 })
@@ -126,21 +130,29 @@ function get_uplinks() {
         .then((resp) => {
             console.log(resp.data);
             let uplinks_data = resp.data.uplinks_data
-
-            dashboard_data.uplinks = uplinks_data;
-            dashboard_data.last_battery_reading = resp.data.last_battery_reading.toFixed(2);
-            dashboard_data.last_sf_reading = resp.data.last_sf_reading;
-
-            dashboard_data.consumed_airtime_sum = uplinks_data.map(uplink => uplink.consumed_airtime).reduce((a, b) => a + b, 0).toFixed(3);
-            dashboard_data.sf_counts = [
-                uplinks_data.filter(uplink => uplink.spreading_factor == 7).length,
-                uplinks_data.filter(uplink => uplink.spreading_factor == 8).length,
-                uplinks_data.filter(uplink => uplink.spreading_factor == 9).length,
-                uplinks_data.filter(uplink => uplink.spreading_factor == 10).length,
-                uplinks_data.filter(uplink => uplink.spreading_factor == 11).length,
-                uplinks_data.filter(uplink => uplink.spreading_factor == 12).length,
-            ]
-            console.log(dashboard_data.sf_counts);
+            if (uplinks_data.length) {
+                dashboard_data.uplinks = uplinks_data;
+                dashboard_data.last_battery_reading = resp.data.last_battery_reading.toFixed(2);
+                dashboard_data.last_sf_reading = resp.data.last_sf_reading;
+    
+                dashboard_data.consumed_airtime_sum = uplinks_data.map(uplink => uplink.consumed_airtime).reduce((a, b) => a + b, 0).toFixed(3);
+                dashboard_data.sf_counts = [
+                    uplinks_data.filter(uplink => uplink.spreading_factor == 7).length,
+                    uplinks_data.filter(uplink => uplink.spreading_factor == 8).length,
+                    uplinks_data.filter(uplink => uplink.spreading_factor == 9).length,
+                    uplinks_data.filter(uplink => uplink.spreading_factor == 10).length,
+                    uplinks_data.filter(uplink => uplink.spreading_factor == 11).length,
+                    uplinks_data.filter(uplink => uplink.spreading_factor == 12).length,
+                ]
+            } else {
+                dashboard_data.uplinks = [];
+                dashboard_data.last_battery_reading = null;
+                dashboard_data.last_battery_reading = null;
+                dashboard_data.last_sf_reading = null;
+                dashboard_data.consumed_airtime_sum = null;
+                dashboard_data.sf_counts = [];
+            }
+            console.log(dashboard_data);
         })
 }
 </script>
