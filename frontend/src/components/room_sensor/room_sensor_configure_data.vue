@@ -10,12 +10,12 @@
         <input type="range" id="range_slider" class="w-100" min="0" :max="props.max_n" v-model="n">
 
         <div class="form-check mt-4">
-            <label class="form-check-label">Show temperature readings</label>
-            <input class="form-check-input" type="checkbox" v-model="show_temp">
+            <label class="form-check-label" for="show_temp_checkbox">Show temperature readings</label>
+            <input class="form-check-input" type="checkbox" id="show_temp_checkbox" v-model="show_temp">
         </div>
         <div class="form-check mt-2 mb-2">
-            <label class="form-check-label">Show pressure readings</label>
-            <input class="form-check-input" type="checkbox" v-model="show_pres">
+            <label class="form-check-label" for="show_pres_checkbox">Show pressure readings</label>
+            <input class="form-check-input" type="checkbox" id="show_pres_checkbox" v-model="show_pres">
         </div>
 
         <div v-if="user_state.is_authenticated" class="d-flex flex-row-reverse bd-highlight">
@@ -58,12 +58,12 @@
                 <small class="text-muted">Empty date will be converted to earliest/latest available date (not specifying neither date will export every uplink).</small>
 
                 <div class="form-check mt-4">
-                    <label class="form-check-label">Export temperature readings</label>
-                    <input class="form-check-input" type="checkbox" v-model="export_temp">
+                    <label class="form-check-label" for="export_temp_checkbox">Export temperature readings</label>
+                    <input class="form-check-input" type="checkbox" id="export_temp_checkbox" v-model="export_temp">
                 </div>
                 <div class="form-check mt-2 mb-2">
-                    <label class="form-check-label">Export pressure readings</label>
-                    <input class="form-check-input" type="checkbox" v-model="export_pres">
+                    <label class="form-check-label" for="export_pres_checkbox">Export pressure readings</label>
+                    <input class="form-check-input" type="checkbox" id="export_pres_checkbox" v-model="export_pres">
                 </div>
             </form>
         </template>

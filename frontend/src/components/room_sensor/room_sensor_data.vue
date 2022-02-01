@@ -8,7 +8,7 @@
                     Additional options
                 </a>
             </div>
-            <div id="data_settings_collapse" class="collapse show" data-bs-parent="#accordion">
+            <div id="data_settings_collapse" class="collapse" data-bs-parent="#accordion">
                 <div class="card-body">
                     <room_sensor_configure_data
                         :current_n="props.displayed_uplinks_count"
