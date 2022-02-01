@@ -1,16 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import room_sensor_view from "@/views/room_sensor_view.vue"
-import about_view from "@/views/about_view.vue"
+import homepage_view from "@/views/homepage_view.vue";
+import room_sensor_view from "@/views/room_sensor_view.vue";
+import mailbox_notifier_view from "@/views/mailbox_notifier_view.vue";
+import user_login from "@/components/user/user_login.vue";
 
-import room_sensor_dashboard from "@/components/room_sensor/room_sensor_dashboard.vue"
-import room_sensor_data from "@/components/room_sensor/room_sensor_data.vue"
-import room_sensor_downlink from "@/components/room_sensor/room_sensor_downlink.vue"
-import room_sensor_settings from "@/components/room_sensor/room_sensor_settings.vue"
+import room_sensor_dashboard from "@/components/room_sensor/room_sensor_dashboard.vue";
+import room_sensor_data from "@/components/room_sensor/room_sensor_data.vue";
+import room_sensor_downlink from "@/components/room_sensor/room_sensor_downlink.vue";
+import room_sensor_settings from "@/components/room_sensor/room_sensor_settings.vue";
 
-import user_login from "@/components/user/user_login.vue"
 
 const routes = [
+    {
+        path: "/",
+        name: "homepage_view",
+        component: homepage_view,
+    },
     {
         path: "/room_sensor",
         alias: "/",
@@ -41,9 +47,9 @@ const routes = [
         ]
     },
     {
-        path: "/about",
-        name: "about_view",
-        component: about_view,
+        path: "/mailbox_notifier",
+        name: "mailbox_notifier_view",
+        component: mailbox_notifier_view,
     },
     {
         path: "/login",
