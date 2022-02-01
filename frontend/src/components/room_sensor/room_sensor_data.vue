@@ -1,5 +1,5 @@
 <template>
-<div class="row home-sensor-data" style="text-align: left">
+<div class="container-fluid" style="text-align: left">
     <div id="accordion" style="margin-top: 1rem;">
         <div class="card">
             <div class="card-header" data-bs-toggle="collapse" href="#data_settings_collapse" style="cursor: pointer;">
@@ -21,68 +21,82 @@
         </div>
     </div>
 
-    <div v-if="props.display_temperature" class="row" style="margin-top: 2rem;">
-        <h4>Temperature readings</h4>
-
-        <div class="col-8" style="margin-top: 1rem;">
-            <line_chart
-                :xaxis="props.data_list.map(obj => obj.time)"
-                :yaxis="props.data_list.map(obj => obj.temperature)"
-                color="#700000"
-            ></line_chart>
+    <div v-if="props.display_temperature" class="row mt-3" style="margin-top: 2rem;">
+        <div class="col-xl-8 col-lg-12 mt-2" style="margin-top: 1rem;">
+            <div class="card border-left-primary shadow">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Temperature Readings</b></h5>
+                    <line_chart
+                        :xaxis="props.data_list.map(obj => obj.time)"
+                        :yaxis="props.data_list.map(obj => obj.temperature)"
+                        color="#700000"
+                    ></line_chart>
+                </div>
+            </div>
         </div>
 
-        <div class="col">
-            <div class="tableFixHead">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="bg-dark text-white"></th>
-                            <th scope="col" class="bg-dark text-white">Time</th>
-                            <th scope="col" class="bg-dark text-white">Temperature [°C]</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
-                            <th scope="row">{{ idx }}</th>
-                            <td>{{ parse_date(data.time) }}</td>
-                            <td>{{ data.temperature.toFixed(2) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="col-xl-4 col-lg-12 mt-2">
+            <div class="card border-left-primary shadow">
+                <div class="card-body">
+                    <div class="tableFixHead">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="bg-dark text-white"></th>
+                                    <th scope="col" class="bg-dark text-white">Time</th>
+                                    <th scope="col" class="bg-dark text-white">Temperature [°C]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
+                                    <th scope="row">{{ idx }}</th>
+                                    <td>{{ parse_date(data.time) }}</td>
+                                    <td>{{ data.temperature.toFixed(2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div v-if="props.display_pressure" class="row" style="margin-top: 2rem;">
-        <h4>Pressure readings</h4>
-
-        <div class="col-8" style="margin-top: 1rem;">
-            <line_chart
-                :xaxis="props.data_list.map(obj => obj.time)"
-                :yaxis="props.data_list.map(obj => obj.pressure)"
-                color="#002D62"
-            ></line_chart>
+    <div v-if="props.display_pressure" class="row mt-5">
+        <div class="col-xl-8 col-lg-12 mt-2" style="margin-top: 1rem;">
+            <div class="card border-left-primary shadow">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Pressure Readings</b></h5>
+                    <line_chart
+                        :xaxis="props.data_list.map(obj => obj.time)"
+                        :yaxis="props.data_list.map(obj => obj.pressure)"
+                        color="#002D62"
+                    ></line_chart>  
+                </div>
+            </div>
         </div>
 
-        <div class="col">
-            <div class="tableFixHead">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="bg-dark text-white"></th>
-                            <th scope="col" class="bg-dark text-white">Time</th>
-                            <th scope="col" class="bg-dark text-white">Pressure [kPa]</th>
-                        </tr>
-                    </thead>    
-                    <tbody>
-                        <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
-                            <th scope="row">{{ idx }}</th>
-                            <td>{{ parse_date(data.time) }}</td>
-                            <td>{{ data.pressure.toFixed(2) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="col-xl-4 col-lg-12 mt-2">
+            <div class="card border-left-primary shadow">
+                <div class="card-body">
+                    <div class="tableFixHead">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="bg-dark text-white"></th>
+                                    <th scope="col" class="bg-dark text-white">Time</th>
+                                    <th scope="col" class="bg-dark text-white">Pressure [kPa]</th>
+                                </tr>
+                            </thead>    
+                            <tbody>
+                                <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
+                                    <th scope="row">{{ idx }}</th>
+                                    <td>{{ parse_date(data.time) }}</td>
+                                    <td>{{ data.pressure.toFixed(2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -96,7 +110,7 @@
 
 .tableFixHead { 
     overflow: auto;
-    height: 500;
+    height: 555;
 }
 .tableFixHead thead th {
     position: sticky;

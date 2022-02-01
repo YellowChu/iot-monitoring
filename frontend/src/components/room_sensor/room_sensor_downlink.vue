@@ -1,11 +1,11 @@
 <template>
 <div>
-    <div class="home-sensor-downlink">
+    <div class="container-fluid">
         <div v-if="downlink_successfull" class="alert alert-success" role="alert">
             Downlink schedules successfully.
         </div>
-        <div class="row">
-            <div class="col">
+        <div class="row mt-2">
+            <div class="col-xl-6 col-lg-12 mt-2">
                 <form class="sensor-form" id="downlink_form" @submit.prevent>
                     <div class="mb-3">
                         <label>Spreading factor</label>
@@ -52,7 +52,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col">
+            <div class="col-xl-6 col-lg-12 mt-2">
                 <div class="jumbotron jumbotron-fluid bg-light">
                     <div class="container">
                         <h4 class="display-6">Description</h4>
