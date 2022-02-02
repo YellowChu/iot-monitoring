@@ -1,60 +1,82 @@
 <template>
-    <div v-if="props.room_sensor.id" class="row">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <router-link
-                    :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
-                    class="nav-link"
-                    :class="{active: route.name==='room_sensor_dashboard'}"
+    <div v-if="props.room_sensor.id" class="row d-flex justify-content-center align-items-center mt-4" style="width: 100rem;">
+        <div class="col-xl-12 col-md-6">
+            <div class="card pt-2 pb-4" style="box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);">
+                <ul class="nav nav-tabs ps-4 fw-bold">
+                    <li class="nav-item">
+                        <router-link
+                            :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
+                            class="nav-link"
+                            :class="{active: route.name==='room_sensor_dashboard'}"
+                        >
+                            Dashboard
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link
+                            :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
+                            class="nav-link"
+                            :class="{active: route.name==='room_sensor_data'}"
+                        >
+                            Data
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link
+                            :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
+                            class="nav-link"
+                            :class="{active: route.name==='room_sensor_downlink'}"
+                        >
+                            Schedule downlink
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link
+                            :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
+                            class="nav-link"
+                            :class="{active: route.name==='room_sensor_settings'}"
+                        >
+                            Settings
+                        </router-link>
+                    </li>
+                </ul>
+        
+                <router-view
+                    :data_list="props.room_sensor.sensor_data_list"
+                    :uplinks_count="props.room_sensor.uplinks_count"
+                    :displayed_uplinks_count="props.room_sensor.displayed_uplinks_count"
+                    :display_temperature="props.room_sensor.display_temperature"
+                    :display_pressure="props.room_sensor.display_pressure"
+                    :sensor_name="props.room_sensor.device_name"
+                    :sensor_description="props.room_sensor.device_description"
                 >
-                    Dashboard
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link
-                    :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
-                    class="nav-link"
-                    :class="{active: route.name==='room_sensor_data'}"
-                >
-                    Data
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link
-                    :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
-                    class="nav-link"
-                    :class="{active: route.name==='room_sensor_downlink'}"
-                >
-                    Schedule downlink
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link
-                    :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
-                    class="nav-link"
-                    :class="{active: route.name==='room_sensor_settings'}"
-                >
-                    Settings
-                </router-link>
-            </li>
-        </ul>
-
-        <router-view
-            :data_list="props.room_sensor.sensor_data_list"
-            :uplinks_count="props.room_sensor.uplinks_count"
-            :displayed_uplinks_count="props.room_sensor.displayed_uplinks_count"
-            :display_temperature="props.room_sensor.display_temperature"
-            :display_pressure="props.room_sensor.display_pressure"
-            :sensor_name="props.room_sensor.device_name"
-            :sensor_description="props.room_sensor.device_description"
-        >
-        </router-view>
+                </router-view>
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped>
 .home-sensor-detail {
     margin-top: 1rem;
+}
+
+.sidebar {
+    color: white;
+    background: gray;
+
+    float: left;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 0.5em;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: 0.3 ease;
 }
 </style>
 

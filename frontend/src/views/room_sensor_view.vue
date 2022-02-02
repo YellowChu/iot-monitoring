@@ -73,11 +73,7 @@
                 </div>
             </div>
 
-            <div class="row" :key="Object.keys(data.displayed_device).length">
-                <div v-if="data.displayed_device">
-                    <room_sensor_detail :room_sensor="data.displayed_device"></room_sensor_detail>
-                </div>
-            </div>
+            <room_sensor_detail :room_sensor="data.displayed_device"></room_sensor_detail>
         </div>
     </div>
     </transition>

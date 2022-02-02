@@ -1,6 +1,6 @@
 <template>
-<div class="home-sensor-settings" style="margin-top: 1rem;">
-    <div class="row">
+<div>
+    <div class="row m-3">
         <form class="sensor-form" @submit.prevent>
             <div class="mb-3">
                 <label class="form-label">Name</label>

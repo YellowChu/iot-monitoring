@@ -110,7 +110,7 @@
 
 .tableFixHead { 
     overflow: auto;
-    height: 555;
+    height: 41rem;
 }
 .tableFixHead thead th {
     position: sticky;
