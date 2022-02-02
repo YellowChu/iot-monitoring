@@ -3,40 +3,40 @@
         <div class="col-xl-12 col-md-6">
             <div class="card pt-2 pb-4" style="box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);">
                 <ul class="nav nav-tabs ps-4 fw-bold">
-                    <li class="nav-item">
+                    <li class="nav-item mb-0">
                         <router-link
                             :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
                             :class="{active: route.name==='room_sensor_dashboard'}"
                         >
-                            Dashboard
+                            <font-awesome-icon :icon="['fas', 'digital-tachograph']"/> Dashboard
                         </router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mb-0">
                         <router-link
                             :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
                             :class="{active: route.name==='room_sensor_data'}"
                         >
-                            Data
+                            <font-awesome-icon :icon="['fas', 'chart-line']"/> Data
                         </router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mb-0">
                         <router-link
                             :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
                             :class="{active: route.name==='room_sensor_downlink'}"
                         >
-                            Schedule downlink
+                            <font-awesome-icon :icon="['fas', 'caret-square-down']"/> Schedule downlink
                         </router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mb-0">
                         <router-link
                             :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
                             :class="{active: route.name==='room_sensor_settings'}"
                         >
-                            Settings
+                            <font-awesome-icon :icon="['fas', 'wrench']"/> Settings
                         </router-link>
                     </li>
                 </ul>
@@ -56,29 +56,6 @@
     </div>
 </template>
 
-<style scoped>
-.home-sensor-detail {
-    margin-top: 1rem;
-}
-
-.sidebar {
-    color: white;
-    background: gray;
-
-    float: left;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    padding: 0.5em;
-
-    display: flex;
-    flex-direction: column;
-
-    transition: 0.3 ease;
-}
-</style>
 
 <script setup>
 import { defineProps } from "vue";

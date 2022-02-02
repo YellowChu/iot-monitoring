@@ -30,5 +30,16 @@
             </svg>
         </div>
     </div>
+
+    <teleport to="body">
+        <wave_footer
+            :bool_trigger="true"
+        ></wave_footer>
+    </teleport>
 </div>
 </template>
+
+
+<script setup>
+import wave_footer from "@/components/ui/wave_footer.vue";
+</script>

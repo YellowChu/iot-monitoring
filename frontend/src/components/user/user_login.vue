@@ -58,8 +58,6 @@ function login_submit() {
     axios
         .post("/auth-api/token/login", request_data)
         .then((resp) => {
-            console.log(resp);
-
             const token = resp.data.auth_token;
             user_state_set_token(token);
 

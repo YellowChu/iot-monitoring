@@ -34,7 +34,7 @@ let data = reactive({
         tooltip: {
             enabled: true,
             x: {
-                format: "dd MMM hh:mm"
+                format: "dd MMM HH:mm"
             }
         },
         colors: [props.color],
@@ -44,6 +44,9 @@ let data = reactive({
         xaxis: {
             type: "datetime",
             categories: props.xaxis,
+            labels: {
+                datetimeUTC: false,
+            },
         },
         yaxis: {
             labels: {

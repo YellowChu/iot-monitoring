@@ -115,8 +115,9 @@ let dashboard_data = reactive({
 const route = useRoute()
 
 watch(() => route.params.device_id, () => {
-    console.log("?");
-    get_uplinks();
+    if (route.params.device_id) {
+        get_uplinks();
+    }
 })
 
 
@@ -128,7 +129,6 @@ function get_uplinks() {
     axios
         .get("/api/v1/roomsensoruplinks/" + route.params.device_id + "/")
         .then((resp) => {
-            console.log(resp.data);
             let uplinks_data = resp.data.uplinks_data
             if (uplinks_data.length) {
                 dashboard_data.uplinks = uplinks_data;
@@ -152,7 +152,6 @@ function get_uplinks() {
                 dashboard_data.consumed_airtime_sum = null;
                 dashboard_data.sf_counts = [];
             }
-            console.log(dashboard_data);
         })
 }
 </script>

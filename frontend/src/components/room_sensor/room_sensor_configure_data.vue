@@ -138,7 +138,6 @@ function save_configuration() {
 }
 
 function uplinks_export() {
-    console.log(export_from.value, export_to.value, export_temp.value, export_pres.value);
     let request_data = {
         export_from: export_from.value,
         export_to: export_to.value,

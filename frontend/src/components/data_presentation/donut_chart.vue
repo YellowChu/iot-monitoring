@@ -19,7 +19,6 @@ const props = defineProps({
     sf_counts: Array,
 })
 
-console.log(props.sf_counts);
 
 let data = reactive({
     chart_options: {

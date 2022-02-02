@@ -45,6 +45,12 @@
                     </div>
                 </div>
             </div>
+
+            <teleport to="body">
+                <wave_footer
+                    :bool_trigger="Object.keys(data.displayed_device).length == 0"
+                ></wave_footer>
+            </teleport>
         </div>
         <div v-if="Object.keys(data.displayed_device).length != 0">
             <div class="card-group d-flex justify-content-center align-items-center pt-3 pb-3">
@@ -199,27 +205,10 @@
     opacity: 0;
     transform: translateY(-30px);
 }
-
-.slide-down-enter-active {
-    transition: all 0.6s;
-}
-.slide-down-leave-active {
-    transition: all 0.3s;
-}
-.slide-down-leave-to {
-    opacity: 0;
-    transform: translateY(-30px);
-}
-.slide-down-enter-from {
-    opacity: 0;
-    transform: translateY(-30px);
-}
 </style>
 
 <script setup>
-/* eslint-disable */
 import axios from "axios";
-import gsap from "gsap";
 
 import { inject, onMounted, provide, reactive, watch } from "vue";
 import router from "@/router";
@@ -227,7 +216,7 @@ import { useRoute } from "vue-router";
 
 import room_sensor_detail from "@/components/room_sensor/room_sensor_detail.vue";
 import modal_window from "@/components/ui/modal_window.vue";
-// import cards_slider from "@/components/ui/cards_slider.vue"
+import wave_footer from "@/components/ui/wave_footer.vue";
 
 
 let data = reactive({
@@ -258,6 +247,11 @@ watch(() => [data.device_id, data.device_name, data.device_name], () => {
     data.enable_create = true;
 })
 
+watch(() => route.params.device_id, () => {
+    if (!route.params.device_id) {
+        data.displayed_device = {};
+    }
+})
 
 onMounted(() => {
     get_room_sensor();
@@ -267,10 +261,9 @@ function get_room_sensor() {
     axios
         .get("/api/v1/roomsensor/")
         .then((response) => {
-            console.log(response);
             data.device_list = response.data;
 
-            if (route.params.device_id) {
+            if (route.params.device_id && route.params.device_id != "undefined") {
                 var found_sensor = data.device_list.filter(sensor => {
                     return sensor.id == route.params.device_id
                 })
@@ -320,7 +313,6 @@ function change_displayed_device(device) {
         data.displayed_device = device;
         router.push({ name: 'room_sensor_dashboard', params: { device_id: device.id } });
     }
-    console.log(data.displayed_device);
 }
 
 function next_cards() {

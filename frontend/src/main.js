@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUser, faLock, faSignInAlt, faSignOutAlt, faSlidersH, faDownload, faBatteryFull, faWaveSquare, faChevronDown, faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faWrench, faCaretSquareDown, faChartLine, faUser, faLock, faSignInAlt, faSignOutAlt, faSlidersH, faDownload, faBatteryFull, faWaveSquare, faChevronDown, faChevronRight, faChevronLeft, faDigitalTachograph } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 
@@ -26,5 +26,9 @@ library.add(faWaveSquare);
 library.add(faChevronDown);
 library.add(faChevronLeft);
 library.add(faChevronRight);
+library.add(faDigitalTachograph);
+library.add(faChartLine);
+library.add(faCaretSquareDown);
+library.add(faWrench);
 
 createApp(App).use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
