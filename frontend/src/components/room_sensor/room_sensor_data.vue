@@ -1,6 +1,9 @@
 <template>
-<div class="container-fluid" style="text-align: left">
-    <div id="accordion" style="margin-top: 1rem;">
+<div class="container-fluid">
+    <div class="row mt-5 mb-5 d-flex justify-content-center align-items-center">
+        <h2 class="fw-bold justify-content-center" style="color: #074879;">Gathered data</h2>
+    </div>
+    <div id="accordion" style="margin-top: 1rem; text-align: left">
         <div class="card">
             <div class="card-header" data-bs-toggle="collapse" href="#data_settings_collapse" style="cursor: pointer;">
                 <a class="btn">

@@ -1,30 +1,28 @@
 <template>
     <div v-if="props.show_modal">
-        <transition name="modal">
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                    <div class="modal-container">
-                        <div class="modal-header">
-                            <slot name="header"></slot>
-                            <button class="btn-close" @click="$emit('close')"></button>
-                        </div>
-                        <div class="modal-body">
-                            <slot name="body"></slot>
-                        </div>
-                        <div class="modal-footer">
-                            <slot name="footer"></slot>
-                        </div>
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header"></slot>
+                        <button class="btn-close" @click="$emit('close')"></button>
+                    </div>
+                    <div class="modal-body">
+                        <slot name="body"></slot>
+                    </div>
+                    <div class="modal-footer">
+                        <slot name="footer"></slot>
                     </div>
                 </div>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
 <style>
 .modal-mask {
     position: fixed;
-    z-index: 9998;
+    z-index: 9999;
     top: 0;
     left: 0;
     width: 100%;

@@ -1,5 +1,8 @@
 <template>
 <div>
+    <div class="row mt-5 mb-5 d-flex justify-content-center align-items-center">
+        <h2 class="fw-bold justify-content-center" style="color: #074879;">Settings</h2>
+    </div>
     <div class="row m-3">
         <form class="sensor-form" @submit.prevent>
             <div class="mb-3">

@@ -1,6 +1,9 @@
 <template>
 <div>
     <div class="container-fluid">
+        <div class="row mt-5 mb-5 d-flex justify-content-center align-items-center">
+            <h2 class="fw-bold justify-content-center" style="color: #074879;">Schedule downlink</h2>
+        </div>
         <div v-if="downlink_successfull" class="alert alert-success" role="alert">
             Downlink schedules successfully.
         </div>
@@ -54,8 +57,7 @@
             </div>
             <div class="col-xl-6 col-lg-12 mt-2">
                 <div class="jumbotron jumbotron-fluid bg-light">
-                    <div class="container">
-                        <h4 class="display-6">Description</h4>
+                    <div class="container p-4">
                         <p class="description">
                             You are able to issue downlink to the lora end node. The available commands are chaning spreding factor and
                             changing led color.

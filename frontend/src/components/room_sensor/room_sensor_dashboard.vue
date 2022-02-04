@@ -1,5 +1,8 @@
 <template>
 <div class="container-fluid">
+    <div class="row mt-5 mb-5 d-flex justify-content-center align-items-center">
+        <h2 class="fw-bold justify-content-center" style="color: #074879;">Daily statistics</h2>
+    </div>
     <div class="row mt-3" style="text-align: left;">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2" style="border-left: 8px solid rgb(28, 28, 28);">
