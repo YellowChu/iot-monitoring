@@ -1,6 +1,6 @@
 <template>
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-4">
-    <div class="navbr-brand ps-5">
+    <div class="navbar-brand ps-5">
         <router-link :to="{ name: 'homepage_view' }" class="nav-link fw-bold text-white" style="font-size: 32px">IoT Gardienne</router-link>
     </div>
 
@@ -30,7 +30,7 @@
 </nav>
 </template>
 
-<style>
+<style scoped>
 .navbar {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     background: linear-gradient(#e66465, #9198e5);

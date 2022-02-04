@@ -2,8 +2,8 @@
     <div v-if="props.room_sensor.id" class="row d-flex justify-content-center align-items-center mt-4" style="width: 100rem;">
         <div class="col-xl-12 col-md-6">
             <div class="card pt-2 pb-4" style="box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);">
-                <ul class="nav nav-tabs ps-4 fw-bold">
-                    <li class="nav-item mb-0">
+                <ul v-if="mq.isLandscape" class="nav nav-tabs ps-4 fw-bold">
+                    <li class="nav-item mb-0 ms-5 me-5">
                         <router-link
                             :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
@@ -12,7 +12,7 @@
                             <font-awesome-icon :icon="['fas', 'digital-tachograph']"/> Dashboard
                         </router-link>
                     </li>
-                    <li class="nav-item mb-0">
+                    <li class="nav-item mb-0 ms-5 me-5">
                         <router-link
                             :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
@@ -21,7 +21,7 @@
                             <font-awesome-icon :icon="['fas', 'chart-line']"/> Data
                         </router-link>
                     </li>
-                    <li class="nav-item mb-0">
+                    <li class="nav-item mb-0 ms-5 me-5">
                         <router-link
                             :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
@@ -30,7 +30,7 @@
                             <font-awesome-icon :icon="['fas', 'caret-square-down']"/> Schedule downlink
                         </router-link>
                     </li>
-                    <li class="nav-item mb-0">
+                    <li class="nav-item mb-0 ms-5 me-5">
                         <router-link
                             :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
                             class="nav-link"
@@ -40,6 +40,46 @@
                         </router-link>
                     </li>
                 </ul>
+                <nav v-if="mq.isPortrait" class="navbar fixed-bottom navbar-expand justify-content-center">
+                    <ul class="navbar-nav">
+                        <li class="nav-item ms-5 me-5">
+                            <router-link
+                                :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
+                                class="nav-link-bot me-5"
+                                :class="{active: route.name==='room_sensor_dashboard'}"
+                            >
+                                <font-awesome-icon :icon="['fas', 'digital-tachograph']" size="2x"/>
+                            </router-link>
+                        </li>
+                        <li class="nav-item ms-5 me-5">
+                            <router-link
+                                :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
+                                class="nav-link-bot me-5"
+                                :class="{active: route.name==='room_sensor_data'}"
+                            >
+                                <font-awesome-icon :icon="['fas', 'chart-line']" size="2x"/>
+                            </router-link>
+                        </li>
+                        <li class="nav-item ms-5 me-5">
+                            <router-link
+                                :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
+                                class="nav-link-bot me-5"
+                                :class="{active: route.name==='room_sensor_downlink'}"
+                            >
+                                <font-awesome-icon :icon="['fas', 'caret-square-down']" size="2x"/>
+                            </router-link>
+                        </li>
+                        <li class="nav-item ms-5 me-5">
+                            <router-link
+                                :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
+                                class="nav-link-bot me-5"
+                                :class="{active: route.name==='room_sensor_settings'}"
+                            >
+                                <font-awesome-icon :icon="['fas', 'wrench']" size="2x"/>
+                            </router-link>
+                        </li>
+                    </ul>
+                </nav>
         
                 <router-view
                     :data_list="props.room_sensor.sensor_data_list"
@@ -56,13 +96,28 @@
     </div>
 </template>
 
+<style scoped>
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    background: linear-gradient(#9198e5, #c191e5);
+}
+
+.nav-link-bot {
+    color: white;
+}
+.active {
+    color: #e66465;
+}
+</style>
 
 <script setup>
 import { defineProps } from "vue";
 import { useRoute } from "vue-router";
+import { useMq } from "vue3-mq";
 
 
 const route = useRoute()
+const mq = useMq();
 
 const props = defineProps({
     room_sensor: Object,
