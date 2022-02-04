@@ -56,7 +56,7 @@
                     
                     <div class="row">
                         <div class="col">
-                            <p class="fs-3"><i>Coming..</i></p>
+                            <p class="fs-3">{{ dashboard_data.today_downlink_count }}/10</p>
                         </div>
                         <div class="col pe-3 ms-5 text-muted">
                             <font-awesome-icon :icon="['fas', 'chevron-down']" size="3x"/>
@@ -113,6 +113,7 @@ let dashboard_data = reactive({
     last_sf_reading: null,
     consumed_airtime_sum: null,
     sf_counts: [],
+    today_downlink_count: 0,
 })
 
 const route = useRoute()
@@ -132,6 +133,7 @@ function get_uplinks() {
     axios
         .get("/api/v1/roomsensoruplinks/" + route.params.device_id + "/")
         .then((resp) => {
+            console.log(resp);
             let uplinks_data = resp.data.uplinks_data
             if (uplinks_data.length) {
                 dashboard_data.uplinks = uplinks_data;
@@ -146,7 +148,8 @@ function get_uplinks() {
                     uplinks_data.filter(uplink => uplink.spreading_factor == 10).length,
                     uplinks_data.filter(uplink => uplink.spreading_factor == 11).length,
                     uplinks_data.filter(uplink => uplink.spreading_factor == 12).length,
-                ]
+                ];
+                dashboard_data.today_downlink_count = resp.data.today_downlink_count;
             } else {
                 dashboard_data.uplinks = [];
                 dashboard_data.last_battery_reading = null;
@@ -154,6 +157,7 @@ function get_uplinks() {
                 dashboard_data.last_sf_reading = null;
                 dashboard_data.consumed_airtime_sum = null;
                 dashboard_data.sf_counts = [];
+                dashboard_data.today_downlink_count = 0;
             }
         })
 }

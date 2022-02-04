@@ -4,13 +4,15 @@ import json
 import pytz
 import requests
 from dateutil.parser import parse as parse_date
+from datetime import datetime, timedelta, time
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
+from django.utils import timezone
 
 from rest_framework.authtoken.models import Token
 
-from apps.sensor.models import RoomSensor
+from apps.sensor.models import RoomSensor, DailyDownlinksCount
 
 
 # TODO: make function decorator
@@ -59,9 +61,24 @@ def schedule_downlink(request):
         }
 
         response = requests.post(url, data=json.dumps(body), headers={"Authorization": post_bearer})
-        print(response.content)
 
         if response.status_code == 200:
+            room_sensor = RoomSensor.objects.filter(device_id="lopy4-otaa").first()
+            today = timezone.now()
+            tomorrow = today + timedelta(1)
+            today_start = datetime.combine(today, time())
+            today_end = datetime.combine(tomorrow, time())
+
+            today_downlink_count = DailyDownlinksCount.objects.filter(
+                date__lte=today_end,
+                date__gte=today_start,
+                room_sensor=room_sensor
+            ).first()
+            if not today_downlink_count:
+                DailyDownlinksCount.objects.create(downlink_count=1, room_sensor=room_sensor)
+            else:
+                today_downlink_count.downlink_count += 1
+                today_downlink_count.save()
             return JsonResponse({"status": "ok"})
         else:
             return JsonResponse({"status": "ttn_nok"})

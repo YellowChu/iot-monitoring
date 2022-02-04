@@ -114,3 +114,9 @@ class RoomSensor(models.Model):
         battery = unpack("f", bytes.fromhex(payload_hexed[24:32]))[0]
 
         return pressure, temperature, battery
+
+class DailyDownlinksCount(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    downlink_count = models.PositiveSmallIntegerField(default=None, null=True, blank=True)
+    
+    room_sensor = models.ForeignKey(RoomSensor, related_name="daily_downlink_count", null=True, on_delete=models.CASCADE)

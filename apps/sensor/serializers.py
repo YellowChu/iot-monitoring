@@ -1,10 +1,10 @@
 from random import randint
+from datetime import datetime, timedelta, time
 
 from django.utils import timezone
 from rest_framework import serializers
 
-from apps.sensor.models import RoomSensor
-
+from apps.sensor.models import RoomSensor, DailyDownlinksCount
 
 
 class RoomSensorSerializer(serializers.ModelSerializer):
@@ -183,6 +183,7 @@ class RoomSensorUplinksSerializer(serializers.ModelSerializer):
     uplinks_data = serializers.SerializerMethodField()
     last_battery_reading = serializers.SerializerMethodField()
     last_sf_reading = serializers.SerializerMethodField()
+    today_downlink_count = serializers.SerializerMethodField()
 
     class Meta:
         model = RoomSensor
@@ -191,6 +192,7 @@ class RoomSensorUplinksSerializer(serializers.ModelSerializer):
             "uplinks_data",
             "last_battery_reading",
             "last_sf_reading",
+            "today_downlink_count",
         ]
     
     def get_uplinks_data(self, room_sensor):
@@ -223,3 +225,19 @@ class RoomSensorUplinksSerializer(serializers.ModelSerializer):
             return last_uplink.spreading_factor
         else:
             return None
+    
+    def get_today_downlink_count(self, room_sensor):
+        today = timezone.now()
+        tomorrow = today + timedelta(1)
+        today_start = datetime.combine(today, time())
+        today_end = datetime.combine(tomorrow, time())
+
+        today_downlink_count = DailyDownlinksCount.objects.filter(
+            date__lte=today_end,
+            date__gte=today_start,
+            room_sensor=room_sensor
+        ).first()
+        if not today_downlink_count:
+            return 0
+        else:
+            return today_downlink_count.downlink_count
