@@ -86,7 +86,7 @@
 
     <modal_window 
         :show_modal="data.show_create_modal"
-        @close="data.show_create_modal=false; data.enable_create=false"
+        @close="data.show_create_modal=false; data.enable_create=false; data.form_err_msg='';"
     >
         <template v-slot:header>
             <h4 class="modal-title" id="myModalLabel">Add Room Sensor</h4>

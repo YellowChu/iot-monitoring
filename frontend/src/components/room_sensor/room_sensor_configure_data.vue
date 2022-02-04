@@ -31,7 +31,7 @@
 
     <modal_window 
         :show_modal="show_export_modal"
-        @close="show_export_modal=false"
+        @close="show_export_modal=false; modal_err_msg='';"
     >
         <template v-slot:header>
             <h4 class="modal-title" id="myModalLabel">Export options</h4>

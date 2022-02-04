@@ -26,7 +26,7 @@
 
     <modal_window 
         :show_modal="data.show_delete_modal"
-        @close="data.show_delete_modal=false"
+        @close="data.show_delete_modal=false; data.form_err_msg='';"
     >
         <template v-slot:header>
             <h4 class="modal-title" id="myModalLabel">Do you really want to delete this sensor?</h4>

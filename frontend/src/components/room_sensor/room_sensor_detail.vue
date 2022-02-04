@@ -40,15 +40,15 @@
                         </router-link>
                     </li>
                 </ul>
-                <nav v-if="mq.isPortrait" class="navbar fixed-bottom navbar-expand justify-content-center">
-                    <ul class="navbar-nav">
+                <nav v-if="mq.isPortrait" class="navbar d-flex fixed-bottom navbar-expand justify-content-center">
+                    <ul class="navbar-nav p-3">
                         <li class="nav-item ms-5 me-5">
                             <router-link
                                 :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
                                 class="nav-link-bot me-5"
                                 :class="{active: route.name==='room_sensor_dashboard'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'digital-tachograph']" size="2x"/>
+                                <font-awesome-icon :icon="['fas', 'digital-tachograph']" size="4x"/>
                             </router-link>
                         </li>
                         <li class="nav-item ms-5 me-5">
@@ -57,7 +57,7 @@
                                 class="nav-link-bot me-5"
                                 :class="{active: route.name==='room_sensor_data'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'chart-line']" size="2x"/>
+                                <font-awesome-icon :icon="['fas', 'chart-line']" size="4x"/>
                             </router-link>
                         </li>
                         <li class="nav-item ms-5 me-5">
@@ -66,7 +66,7 @@
                                 class="nav-link-bot me-5"
                                 :class="{active: route.name==='room_sensor_downlink'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'caret-square-down']" size="2x"/>
+                                <font-awesome-icon :icon="['fas', 'caret-square-down']" size="4x"/>
                             </router-link>
                         </li>
                         <li class="nav-item ms-5 me-5">
@@ -75,7 +75,7 @@
                                 class="nav-link-bot me-5"
                                 :class="{active: route.name==='room_sensor_settings'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'wrench']" size="2x"/>
+                                <font-awesome-icon :icon="['fas', 'wrench']" size="4x"/>
                             </router-link>
                         </li>
                     </ul>

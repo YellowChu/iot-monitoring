@@ -76,7 +76,7 @@
 
     <modal_window 
         :show_modal="show_downlink_modal"
-        @close="show_downlink_modal=false"
+        @close="show_downlink_modal=false; modal_err_msg='';"
     >
         <template v-slot:header>
             <h4 class="modal-title" id="myModalLabel">Do you really want to schedule downlink?</h4>
