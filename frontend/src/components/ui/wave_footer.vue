@@ -91,6 +91,4 @@ import { defineProps } from "vue";
 let props = defineProps({
     bool_trigger: Boolean,
 })
-
-console.log(props.bool_trigger);
 </script>

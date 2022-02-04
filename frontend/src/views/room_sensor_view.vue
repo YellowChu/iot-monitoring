@@ -210,7 +210,7 @@
 <script setup>
 import axios from "axios";
 
-import { inject, onMounted, provide, reactive, watch } from "vue";
+import { onMounted, provide, reactive, watch } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
 
@@ -238,7 +238,6 @@ let data = reactive({
 })
 
 const route = useRoute()
-const remove_token = inject("remove_token");
 
 provide("update_room_sensor", get_room_sensor);
 
@@ -260,19 +259,14 @@ onMounted(() => {
 function get_room_sensor() {
     axios
         .get("/api/v1/roomsensor/")
-        .then((response) => {
-            data.device_list = response.data;
+        .then((resp) => {
+            data.device_list = resp.data;
 
             if (route.params.device_id && route.params.device_id != "undefined") {
                 var found_sensor = data.device_list.filter(sensor => {
                     return sensor.id == route.params.device_id
                 })
                 data.displayed_device = found_sensor[0];
-            }
-        })
-        .catch((err) => {
-            if (err.response.data && err.response.status == 401) {
-                remove_token();
             }
         })
 }

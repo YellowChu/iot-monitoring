@@ -40,8 +40,6 @@ import base_view from "@/views/base_view.vue"
 import { provide, reactive, readonly } from "vue";
 
 // user auth storage
-// TODO: move somewhere else
-// TODO: when opening site check if token is working if not remove it
 let user_state = reactive({
     token: "",
     is_authenticated: false,
@@ -52,7 +50,9 @@ initialize_user();
 const token = user_state.token;
 
 if (token) {
+    console.log("!");
     axios.defaults.headers.common["Authorization"] = "Token " + token;
+    validate_token();
 } else {
     axios.defaults.headers.common["Authorization"] = "";
 }
@@ -70,6 +70,20 @@ function initialize_user() {
 function set_token(token) {
     user_state.token = token;
     user_state.is_authenticated = true;
+}
+
+function validate_token() {
+    var request = new XMLHttpRequest();
+    request.open("GET", "/token-auth/", false);
+    request.setRequestHeader("Authorization", "Token " + token);
+    request.send(null);
+
+    if (request.status === 200) {
+        if (JSON.parse(request.responseText).status != "ok") {
+            console.log("nok");
+            remove_token();
+        }
+    }
 }
 
 function remove_token() {
