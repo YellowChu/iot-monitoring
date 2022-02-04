@@ -50,7 +50,6 @@ initialize_user();
 const token = user_state.token;
 
 if (token) {
-    console.log("!");
     axios.defaults.headers.common["Authorization"] = "Token " + token;
     validate_token();
 } else {
@@ -80,7 +79,6 @@ function validate_token() {
 
     if (request.status === 200) {
         if (JSON.parse(request.responseText).status != "ok") {
-            console.log("nok");
             remove_token();
         }
     }

@@ -1,6 +1,6 @@
 <template>
 <div class="row align-items-center justify-content-center" style="margin-top: 25rem;">
-    <div class="login-card card" style="width: 30rem; padding-top: 1rem;">
+    <div class="login-card card" style="width: 25rem;">
         <div class="card-body" style="text-align: left;">
             <div v-if="form_err_msg" class="alert alert-danger" role="alert">
                 {{ form_err_msg }}
@@ -30,7 +30,6 @@
 
 <style>
 .login-card {
-    transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 </style>
