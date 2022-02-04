@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col card-group pt-3 pb-3">
                         <div class="d-flex flex-column justify-content-center align-items-center ms-2" style="width: 3rem">
-                            <font-awesome-icon v-if="data.start - 3 >= 0" :icon="['fas', 'chevron-left']" size="2x" @click="prev_cards()" style="cursor:pointer"/>
+                            <font-awesome-icon v-if="data.start - data.step >= 0" :icon="['fas', 'chevron-left']" size="2x" @click="prev_cards()" style="cursor:pointer"/>
                         </div>
                         <transition :name="data.transition_name" mode="out-in">
                             <div class="d-flex" :key="data.start">
@@ -27,7 +27,7 @@
                             </div>
                         </transition>
                         <div class="d-flex flex-column justify-content-center align-items-center me-2" style="width: 3rem">
-                            <font-awesome-icon v-if="data.start + 3 < data.device_list.length" :icon="['fas', 'chevron-right']" size="2x" @click="next_cards()" style="cursor:pointer"/>
+                            <font-awesome-icon v-if="data.start + data.step < data.device_list.length" :icon="['fas', 'chevron-right']" size="2x" @click="next_cards()" style="cursor:pointer"/>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
         <div v-if="Object.keys(data.displayed_device).length != 0">
             <div class="card-group d-flex justify-content-center align-items-center pt-3 pb-3">
                 <div class="d-flex flex-column justify-content-center align-items-center ms-2" style="width: 3rem">
-                    <font-awesome-icon v-if="data.start - 3 >= 0" :icon="['fas', 'chevron-left']" size="2x" @click="prev_cards()" style="cursor:pointer"/>
+                    <font-awesome-icon v-if="data.start - data.step >= 0" :icon="['fas', 'chevron-left']" size="2x" @click="prev_cards()" style="cursor:pointer"/>
                 </div>
                 <transition :name="data.transition_name" mode="out-in">
                     <div class="d-flex" :key="data.start">
@@ -75,7 +75,7 @@
                     </div>
                 </transition>
                 <div class="d-flex flex-column justify-content-center align-items-center me-2" style="width: 3rem">
-                    <font-awesome-icon v-if="data.start + 3 < data.device_list.length" :icon="['fas', 'chevron-right']" size="2x" @click="next_cards()" style="cursor:pointer"/>
+                    <font-awesome-icon v-if="data.start + data.step < data.device_list.length" :icon="['fas', 'chevron-right']" size="2x" @click="next_cards()" style="cursor:pointer"/>
                 </div>
             </div>
 
@@ -213,6 +213,7 @@ import axios from "axios";
 import { onMounted, provide, reactive, watch } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import { useMq } from "vue3-mq";
 
 import room_sensor_detail from "@/components/room_sensor/room_sensor_detail.vue";
 import modal_window from "@/components/ui/modal_window.vue";
@@ -233,11 +234,13 @@ let data = reactive({
     // slider data
     start: 0,
     end: 3,
+    step: 3,
     transition_name: "slide-left",
     cards: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
 })
 
 const route = useRoute()
+const mq = useMq();
 
 provide("update_room_sensor", get_room_sensor);
 
@@ -252,7 +255,22 @@ watch(() => route.params.device_id, () => {
     }
 })
 
+watch(() => mq.isLandscape, (isLandscape, wasLandscape) => {
+    console.log(isLandscape, wasLandscape);
+    if (isLandscape && !wasLandscape) {
+        data.end += 2;
+        data.step += 2;
+    } else if (!isLandscape && wasLandscape) {
+        data.end -= 2;
+        data.step -= 2;
+    }
+})
+
 onMounted(() => {
+    if (mq.isPortrait) {
+        data.end = 1;
+        data.step = 1;
+    }
     get_room_sensor();
 })
 
@@ -311,13 +329,13 @@ function change_displayed_device(device) {
 
 function next_cards() {
     data.transition_name = "slide-left";
-    data.start += 3;
-    data.end += 3;
+    data.start += data.step;
+    data.end += data.step;
 }
 
 function prev_cards() {
     data.transition_name = "slide-right";
-    data.start -= 3;
-    data.end -= 3;
+    data.start -= data.step;
+    data.end -= data.step;
 }
 </script>
