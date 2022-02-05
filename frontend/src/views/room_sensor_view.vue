@@ -79,7 +79,13 @@
                 </div>
             </div>
 
-            <room_sensor_detail :room_sensor="data.displayed_device"></room_sensor_detail>
+            <transition name="slide-right" mode="out-in">
+                <div :key="data.displayed_device.id">
+                    <room_sensor_detail
+                        :room_sensor="data.displayed_device"
+                    ></room_sensor_detail>
+                </div>
+            </transition>
         </div>
     </div>
     </transition>
