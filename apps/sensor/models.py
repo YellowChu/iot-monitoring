@@ -76,21 +76,11 @@ class Uplink(models.Model):
         ordering = ["-received_at"] 
 
 
-class UplinkGateway(models.Model):
+class Gateway(models.Model):
     gateway_id = models.CharField(max_length=128)
     gateway_eui = models.CharField(max_length=128)
-    received_at = models.DateTimeField(default=None, null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    rssi = models.SmallIntegerField(null=True, default=None)
-    snr = models.DecimalField(max_digits=9, decimal_places=3, null=True, default=None)
 
-    uplink = models.ForeignKey(Uplink, related_name="gateways", null=True, on_delete=models.CASCADE)
-
-    class Meta:
-        ordering = ["-received_at"]
-
-    def __str__(self):
-        return self.gateway_id
+    uplinks = models.ManyToManyField(Uplink, blank=True)
 
 
 class RoomSensor(models.Model):
@@ -116,6 +106,8 @@ class RoomSensor(models.Model):
         return pressure, temperature, battery
 
 class DailyDownlinksCount(models.Model):
+    DAILY_LIMIT = 10
+
     date = models.DateTimeField(auto_now_add=True)
     downlink_count = models.PositiveSmallIntegerField(default=None, null=True, blank=True)
     

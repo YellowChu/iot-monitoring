@@ -179,11 +179,12 @@ class RoomSensorSerializer(serializers.ModelSerializer):
             return room_sensor.displayed_uplinks_number
 
 
-class RoomSensorUplinksSerializer(serializers.ModelSerializer):
+class RoomSensorDashboardSerializer(serializers.ModelSerializer):
     uplinks_data = serializers.SerializerMethodField()
     last_battery_reading = serializers.SerializerMethodField()
     last_sf_reading = serializers.SerializerMethodField()
-    today_downlink_count = serializers.SerializerMethodField()
+    downlink_count = serializers.SerializerMethodField()
+    gateway_count = serializers.SerializerMethodField()
 
     class Meta:
         model = RoomSensor
@@ -192,7 +193,8 @@ class RoomSensorUplinksSerializer(serializers.ModelSerializer):
             "uplinks_data",
             "last_battery_reading",
             "last_sf_reading",
-            "today_downlink_count",
+            "downlink_count",
+            "gateway_count",
         ]
     
     def get_uplinks_data(self, room_sensor):
@@ -226,18 +228,26 @@ class RoomSensorUplinksSerializer(serializers.ModelSerializer):
         else:
             return None
     
-    def get_today_downlink_count(self, room_sensor):
-        today = timezone.now()
-        tomorrow = today + timedelta(1)
-        today_start = datetime.combine(today, time())
-        today_end = datetime.combine(tomorrow, time())
-
-        today_downlink_count = DailyDownlinksCount.objects.filter(
-            date__lte=today_end,
-            date__gte=today_start,
+    def get_downlink_count(self, room_sensor):
+        downlink_count = DailyDownlinksCount.objects.filter(
+            date__gte=timezone.now().replace(hour=0, minute=0, second=0),
+            date__lte=timezone.now().replace(hour=23, minute=59, second=59),
             room_sensor=room_sensor
         ).first()
-        if not today_downlink_count:
+        if not downlink_count:
             return 0
         else:
-            return today_downlink_count.downlink_count
+            return downlink_count.downlink_count
+
+    def get_gateway_count(self, room_sensor):
+        uplinks = room_sensor.uplinks.filter(
+            received_at__gte=timezone.now().replace(hour=0, minute=0, second=0),
+            received_at__lte=timezone.now().replace(hour=23, minute=59, second=59)
+        )
+
+        gateway_count = {}
+        for uplink in uplinks:
+            for gateway in uplink.gateway_set.all():
+                gateway_count[gateway.gateway_id] = gateway_count.get(gateway.gateway_id, 0) + 1
+
+        return gateway_count

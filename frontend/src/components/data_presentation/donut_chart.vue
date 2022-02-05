@@ -16,7 +16,7 @@ import apexcharts from "vue3-apexcharts";
 
 const props = defineProps({
     labels: Array,
-    sf_counts: Array,
+    counts: Array,
 })
 
 
@@ -30,18 +30,16 @@ let data = reactive({
             show: false
         },
     },
-    series: props.sf_counts,
+    series: props.counts,
 })
 
 
-watch(() => props.sf_counts, () => {
-    data.series = props.sf_counts;
+watch(() => props.counts, () => {
+    data.series = props.counts;
 })
 watch(() => props.labels, () => {
     data.chart_options = {
-        chart: {
-            labels: props.labels,
-        },
+        labels: props.labels,
     }
 })
 </script>

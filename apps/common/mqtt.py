@@ -9,7 +9,7 @@ from channels.layers import get_channel_layer
 
 from django.conf import settings
 
-from apps.sensor.models import Uplink, UplinkGateway, RoomSensor
+from apps.sensor.models import Uplink, Gateway, RoomSensor
 
 # USER = "bp-lora-nguyen@ttn"
 USER = f"{settings.TTN_APP_NAME}@ttn"
@@ -57,18 +57,12 @@ def parse_uplink_message(msg_payload):
     for gateway in uplink_gateways:
         gateway_id = gateway.get("gateway_ids", {}).get("gateway_id", "")
         gateway_eui = gateway.get("gateway_ids", {}).get("eui", "")
-        received_at = gateway.get("time", "")
-        rssi = gateway.get("rssi", None)
-        snr = gateway.get("snr", None)
 
-        gateway = UplinkGateway.objects.create(
-            gateway_id=gateway_id,
-            gateway_eui=gateway_eui,
-            received_at=isoparse(received_at),
-            rssi=rssi,
-            snr=snr,
-            uplink=uplink,
-        )
+        gateway = Gateway.objects.filter(gateway_id=gateway_id).first()
+        if not gateway:
+            gateway = Gateway.objects.create(gateway_id=gateway_id, gateway_eui=gateway_eui)
+        
+        gateway.uplinks.add(uplink)
 
     room_sensor, _ = RoomSensor.objects.get_or_create(device_id=device_id)
     room_sensor.uplinks.add(uplink)

@@ -38,6 +38,20 @@ def schedule_downlink(request):
             "Unchanged": "06",
         }
         
+        room_sensor = RoomSensor.objects.filter(device_id="lopy4-otaa").first()
+        today = timezone.now()
+        tomorrow = today + timedelta(1)
+        today_start = datetime.combine(today, time())
+        today_end = datetime.combine(tomorrow, time())
+
+        today_downlink_count = DailyDownlinksCount.objects.filter(
+            date__lte=today_end,
+            date__gte=today_start,
+            room_sensor=room_sensor
+        ).first()
+        if today_downlink_count and today_downlink_count.downlink_count >= DailyDownlinksCount.DAILY_LIMIT:
+            return JsonResponse({"status": "limit_nok"})
+
         spreading_factor = request.GET.get("spreading_factor", "Unchanged")
         color_code = request.GET.get("color_code", "Unchanged")
 
@@ -63,17 +77,6 @@ def schedule_downlink(request):
         response = requests.post(url, data=json.dumps(body), headers={"Authorization": post_bearer})
 
         if response.status_code == 200:
-            room_sensor = RoomSensor.objects.filter(device_id="lopy4-otaa").first()
-            today = timezone.now()
-            tomorrow = today + timedelta(1)
-            today_start = datetime.combine(today, time())
-            today_end = datetime.combine(tomorrow, time())
-
-            today_downlink_count = DailyDownlinksCount.objects.filter(
-                date__lte=today_end,
-                date__gte=today_start,
-                room_sensor=room_sensor
-            ).first()
             if not today_downlink_count:
                 DailyDownlinksCount.objects.create(downlink_count=1, room_sensor=room_sensor)
             else:

@@ -173,12 +173,16 @@ function schedule_downlink() {
             if (resp.data.status == "ok") {
                 show_downlink_modal.value = false;
                 downlink_successfull.value = true;
-            } else {
-                modal_err_msg.value = "Could not schedule downlink. Some problems with The Things Network.";
+            } else if (resp.data.status == "limit_nok") {
+                modal_err_msg.value = "You have reached today's limit. Try again tommorow.";
+            } else if (resp.data.status == "ttn_nok") {
+                modal_err_msg.value = "Could not connect to TTN.";
+            } else if (resp.data.status == "user_nok") {
+                modal_err_msg.value = "You're not authorized to make this request.";
             }
         })
         .catch((err) => {
-            alert(err);
+            modal_err_msg.value = err;
         })
 }
 

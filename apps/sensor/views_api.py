@@ -1,5 +1,5 @@
 from apps.sensor.models import RoomSensor
-from apps.sensor.serializers import RoomSensorSerializer, RoomSensorUplinksSerializer
+from apps.sensor.serializers import RoomSensorSerializer, RoomSensorDashboardSerializer
 
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
@@ -17,10 +17,10 @@ class RoomSensorViewSet(
     queryset = RoomSensor.objects.all().order_by("id")
 
 
-class RoomSensorUplinksViewSet(
+class RoomSensorDashboardViewSet(
     GenericViewSet,
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
 ):
-    serializer_class = RoomSensorUplinksSerializer
+    serializer_class = RoomSensorDashboardSerializer
     queryset = RoomSensor.objects.all().order_by("id")

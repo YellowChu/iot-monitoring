@@ -56,7 +56,7 @@
                     
                     <div class="row">
                         <div class="col">
-                            <p class="fs-3">{{ dashboard_data.today_downlink_count }}/10</p>
+                            <p class="fs-3">{{ dashboard_data.downlink_count }}/10</p>
                         </div>
                         <div class="col pe-3 ms-5 text-muted">
                             <font-awesome-icon :icon="['fas', 'chevron-down']" size="3x"/>
@@ -75,7 +75,7 @@
                     <div class="">
                         <donut_chart
                             :labels='["SF07", "SF08", "SF09", "SF10", "SF11", "SF12"]'
-                            :sf_counts="dashboard_data.sf_counts"
+                            :counts="dashboard_data.sf_counts"
                         ></donut_chart>
                     </div>
                 </div>
@@ -84,11 +84,11 @@
         <div class="col-xl-6 col-lg-12 mt-2">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title text-primary"><b><i>Gateways used (coming..)</i></b></h5>
+                    <h5 class="card-title text-primary"><b>Gateways used</b></h5>
                     <div class="">
                         <donut_chart
-                            :labels='["GW1", "GW2", "GW3", "GW4", "GW5"]'
-                            :sf_counts='[24, 34, 2, 12, 1]'
+                            :labels="Object.keys(dashboard_data.gateway_count)"
+                            :counts="Object.values(dashboard_data.gateway_count)"
                         ></donut_chart>
                     </div>
                 </div>
@@ -113,7 +113,8 @@ let dashboard_data = reactive({
     last_sf_reading: null,
     consumed_airtime_sum: null,
     sf_counts: [],
-    today_downlink_count: 0,
+    downlink_count: 0,
+    gateway_count: {},
 })
 
 const route = useRoute()
@@ -131,9 +132,16 @@ onMounted(() => {
 
 function get_uplinks() {
     axios
-        .get("/api/v1/roomsensoruplinks/" + route.params.device_id + "/")
+        .get("/api/v1/roomsensordashboard/" + route.params.device_id + "/")
         .then((resp) => {
-            console.log(resp);
+            dashboard_data.downlink_count = resp.data.downlink_count;
+
+            if (resp.data.gateway_count) {
+                dashboard_data.gateway_count = resp.data.gateway_count;
+            } else {
+                resp.data.gateway_count = {};
+            }
+
             let uplinks_data = resp.data.uplinks_data
             if (uplinks_data.length) {
                 dashboard_data.uplinks = uplinks_data;
@@ -149,7 +157,6 @@ function get_uplinks() {
                     uplinks_data.filter(uplink => uplink.spreading_factor == 11).length,
                     uplinks_data.filter(uplink => uplink.spreading_factor == 12).length,
                 ];
-                dashboard_data.today_downlink_count = resp.data.today_downlink_count;
             } else {
                 dashboard_data.uplinks = [];
                 dashboard_data.last_battery_reading = null;
@@ -157,7 +164,6 @@ function get_uplinks() {
                 dashboard_data.last_sf_reading = null;
                 dashboard_data.consumed_airtime_sum = null;
                 dashboard_data.sf_counts = [];
-                dashboard_data.today_downlink_count = 0;
             }
         })
 }
