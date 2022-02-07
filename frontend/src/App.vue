@@ -23,12 +23,7 @@
 }
 
 .base {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     font-family: Helvetica;
-    color: #2c3e50;
     overflow: hidden;
 }
 </style>

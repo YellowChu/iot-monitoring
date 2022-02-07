@@ -16,7 +16,8 @@ import {
     faChevronDown,
     faChevronRight,
     faChevronLeft,
-    faDigitalTachograph 
+    faChevronCircleRight,
+    faDigitalTachograph,
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -35,6 +36,7 @@ library.add(faChevronRight);
 library.add(faDigitalTachograph);
 library.add(faChartLine);
 library.add(faCaretSquareDown);
+library.add(faChevronCircleRight);
 library.add(faWrench);
 
 export default FontAwesomeIcon;
