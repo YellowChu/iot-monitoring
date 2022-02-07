@@ -18,6 +18,7 @@ import {
     faChevronLeft,
     faChevronCircleRight,
     faDigitalTachograph,
+    faCloud,
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -38,5 +39,6 @@ library.add(faChartLine);
 library.add(faCaretSquareDown);
 library.add(faChevronCircleRight);
 library.add(faWrench);
+library.add(faCloud);
 
 export default FontAwesomeIcon;

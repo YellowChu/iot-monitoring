@@ -93,12 +93,6 @@
             </div>
         </div>
     </section>
-
-    <!-- <teleport to="body">
-        <wave_footer
-            :bool_trigger="true"
-        ></wave_footer>
-    </teleport> -->
 </div>
 </template>
 
@@ -175,7 +169,3 @@ section {
     fill: #150f19;
 }
 </style>
-
-<script setup>
-// import wave_footer from "@/components/ui/wave_footer.vue";
-</script>
