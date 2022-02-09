@@ -67,12 +67,12 @@ def parse_uplink_message(msg_payload):
         gateway.uplinks.add(uplink)
 
     payload_hexed = b64decode(uplink_payload).hex()
-    sensor_code = payload_hexed[:4]
+    sensor_code = payload_hexed[:8]
     
-    if sensor_code == "0001":
+    if sensor_code == "00000001":
         room_sensor, _ = RoomSensor.objects.get_or_create(device_id=device_id)
         room_sensor.uplinks.add(uplink)
-    elif sensor_code == "0002":
+    elif sensor_code == "00000002":
         print("Mailbox")
 
     notify_about_uplink()

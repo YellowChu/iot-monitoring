@@ -98,9 +98,9 @@ class RoomSensor(models.Model):
 
     def parse_uplink_payload(self, payload):
         payload_hexed = b64decode(payload).hex()
-        pressure = unpack("f", bytes.fromhex(payload_hexed[4:12]))[0]
-        temperature = unpack("f", bytes.fromhex(payload_hexed[12:20]))[0]
-        battery = unpack("f", bytes.fromhex(payload_hexed[20:28]))[0]
+        pressure = unpack("f", bytes.fromhex(payload_hexed[8:16]))[0]
+        temperature = unpack("f", bytes.fromhex(payload_hexed[16:24]))[0]
+        battery = unpack("f", bytes.fromhex(payload_hexed[24:32]))[0]
 
         return pressure, temperature, battery
 
