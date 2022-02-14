@@ -39,14 +39,10 @@ def schedule_downlink(request):
         }
         
         room_sensor = RoomSensor.objects.filter(device_id="lopy4-otaa").first()
-        today = timezone.now()
-        tomorrow = today + timedelta(1)
-        today_start = datetime.combine(today, time())
-        today_end = datetime.combine(tomorrow, time())
 
         today_downlink_count = DailyDownlinksCount.objects.filter(
-            date__lte=today_end,
-            date__gte=today_start,
+            date__gte=timezone.now().replace(hour=0, minute=0, second=0),
+            date__lte=timezone.now().replace(hour=23, minute=59, second=59),
             room_sensor=room_sensor
         ).first()
         if today_downlink_count and today_downlink_count.downlink_count >= DailyDownlinksCount.DAILY_LIMIT:
@@ -64,7 +60,7 @@ def schedule_downlink(request):
         payload = payload_sf + payload_led
         payload = codecs.encode(codecs.decode(payload, "hex"), "base64").decode()
 
-        url = settings.TTN_DL_URL
+        url = f"{settings.TTN_DL_URL}/{room_sensor.device_id}/down/push"
         post_bearer = settings.TTN_POST_BEARER
         body = {
             "downlinks": [{
