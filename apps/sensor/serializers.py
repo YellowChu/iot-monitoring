@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, time
 from django.utils import timezone
 from rest_framework import serializers
 
-from apps.sensor.models import RoomSensor, DailyDownlinksCount
+from apps.sensor.models import DailyDownlinksCount, MailboxNotifier, RoomSensor
 
 
 class RoomSensorSerializer(serializers.ModelSerializer):
@@ -251,3 +251,18 @@ class RoomSensorDashboardSerializer(serializers.ModelSerializer):
                 gateway_count[gateway.gateway_id] = gateway_count.get(gateway.gateway_id, 0) + 1
 
         return gateway_count
+
+
+class MailboxNotifierSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MailboxNotifier
+        fields = [
+            "id",
+            "device_id",
+            "device_name",
+            "device_description",
+            "is_mail",
+            "number_of_mails",
+            "should_notify",
+            "emails",
+        ]

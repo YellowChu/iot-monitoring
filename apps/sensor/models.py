@@ -1,6 +1,7 @@
 from base64 import b64decode
 from struct import unpack
 
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 '''
@@ -103,6 +104,30 @@ class RoomSensor(models.Model):
         battery = unpack("f", bytes.fromhex(payload_hexed[24:32]))[0]
 
         return pressure, temperature, battery
+
+
+class MailboxNotifier(models.Model):
+    device_id = models.CharField(max_length=256, default="", unique=True)
+    device_name = models.CharField(max_length=256, default="", blank=True)
+    device_description = models.TextField(blank=True)
+
+    is_mail = models.BooleanField(default=False)
+    number_of_mails = models.PositiveSmallIntegerField(blank=True, default= 0)
+
+    should_notify = models.BooleanField(default=False)
+    emails = ArrayField(
+            models.CharField(max_length=64),
+            blank=True,
+            default=list,
+        )
+
+    def __str__(self):
+        return self.device_id
+    
+    def clear_mailbox(self):
+        self.is_mail = False
+        self.number_of_mails = 0
+        
 
 class DailyDownlinksCount(models.Model):
     DAILY_LIMIT = 10
