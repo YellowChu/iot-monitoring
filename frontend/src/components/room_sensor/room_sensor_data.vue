@@ -33,6 +33,7 @@
                         :xaxis="props.data_list.map(obj => obj.time)"
                         :yaxis="props.data_list.map(obj => obj.temperature)"
                         color="#700000"
+                        series_name="Temperature [°C]"
                     ></line_chart>
                 </div>
             </div>
@@ -71,8 +72,9 @@
                     <h5 class="card-title"><b>Pressure Readings</b></h5>
                     <line_chart
                         :xaxis="props.data_list.map(obj => obj.time)"
-                        :yaxis="props.data_list.map(obj => obj.pressure)"
+                        :yaxis="props.data_list.map(obj => obj.pressure / 1000)"
                         color="#002D62"
+                        series_name="Pressure [kPa]"
                     ></line_chart>  
                 </div>
             </div>
@@ -94,7 +96,7 @@
                                 <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
                                     <th scope="row">{{ idx }}</th>
                                     <td>{{ parse_date(data.time) }}</td>
-                                    <td>{{ data.pressure.toFixed(2) }}</td>
+                                    <td>{{ (data.pressure / 1000).toFixed(2) }}</td>
                                 </tr>
                             </tbody>
                         </table>

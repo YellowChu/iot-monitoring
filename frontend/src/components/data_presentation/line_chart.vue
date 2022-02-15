@@ -18,6 +18,7 @@ const props = defineProps({
     xaxis: Array,
     yaxis: Array,
     color: String,
+    series_name: String,
 })
 
 
@@ -61,7 +62,7 @@ let data = reactive({
     },
     temperature_series: {
         yaxis: [{
-            name: "temperature",
+            name: props.series_name,
             data: props.yaxis,
         }]
     }
@@ -80,6 +81,13 @@ watch(() => props.yaxis, () => {
     data.temperature_series = {
         yaxis: [{
             data: props.yaxis,
+        }]
+    };
+})
+watch(() => props.series_name, () => {
+    data.temperature_series = {
+        yaxis: [{
+            name: props.series_name,
         }]
     };
 })
