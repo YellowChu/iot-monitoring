@@ -29,7 +29,10 @@ class RoomSensorDashboardViewSet(
 class MailboxNotifierViewSet(
     GenericViewSet,
     mixins.ListModelMixin,
+    mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     serializer_class = MailboxNotifierSerializer
     queryset = MailboxNotifier.objects.all().order_by("id")
