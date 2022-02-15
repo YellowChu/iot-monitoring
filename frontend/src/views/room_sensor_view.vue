@@ -242,7 +242,6 @@ let data = reactive({
     end: 3,
     step: 3,
     transition_name: "slide-left",
-    cards: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
 })
 
 const route = useRoute()
@@ -251,7 +250,7 @@ const mq = useMq();
 provide("update_room_sensor", get_room_sensor);
 
 
-watch(() => [data.device_id, data.device_name, data.device_name], () => {
+watch(() => data.device_id, () => {
     data.enable_create = true;
 })
 
@@ -262,7 +261,6 @@ watch(() => route.params.device_id, () => {
 })
 
 watch(() => mq.isLandscape, (isLandscape, wasLandscape) => {
-    console.log(isLandscape, wasLandscape);
     if (isLandscape && !wasLandscape) {
         data.end += 2;
         data.step += 2;
