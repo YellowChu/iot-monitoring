@@ -66,7 +66,4 @@ const mq = useMq();
 const props = defineProps({
     mailbox_notifier: Object,
 })
-
-
-console.log(props.mailbox_notifier);
 </script>

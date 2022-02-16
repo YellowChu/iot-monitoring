@@ -11,7 +11,7 @@ import paho.mqtt.client as mqtt
 
 from django.conf import settings
 
-from apps.sensor.models import Uplink, Gateway, RoomSensor
+from apps.sensor.models import MailboxNotifier, Uplink, Gateway, RoomSensor
 
 # USER = "bp-lora-nguyen@ttn"
 USER = f"{settings.TTN_APP_NAME}@ttn"
@@ -73,7 +73,9 @@ def parse_uplink_message(msg_payload):
         room_sensor, _ = RoomSensor.objects.get_or_create(device_id=device_id)
         room_sensor.uplinks.add(uplink)
     elif sensor_code == "00000002":
-        print("Mailbox")
+        mailbox_notifier, _ = MailboxNotifier.objects.get_or_create(device_id=device_id)
+        mailbox_notifier.number_of_mails += 1
+        mailbox_notifier.save()
 
     notify_about_uplink()
 

@@ -82,16 +82,39 @@ import { useRoute } from "vue-router";
 import unlogged_warning from "@/components/user/unlogged_warning.vue";
 
 
+const update_mailbox_notifier = inject("update_mailbox_notifier");
+const user_state = inject("user_state");
+const route = useRoute();
+
+
+// websocket
+const sensor_socket = new WebSocket(
+    (window.location.protocol === "https:" ? "wss" : "ws")
+    + "://"
+    + window.location.host
+    + "/ws/sensor/"
+);
+
+sensor_socket.onmessage = function(e) {
+    const msg = JSON.parse(e.data);
+    if (msg.message == "New uplink") {
+        update_mailbox_notifier();
+    }
+    console.log(msg.message);
+}
+
+sensor_socket.onclose = function() {
+    console.error("Socket closed for some reason");
+}
+
+
+// mailbox
 const props = defineProps({
     number_of_mails: Number,
 })
 
 let hover = ref(false);
 let err_msg = ref("");
-
-const update_mailbox_notifier = inject("update_mailbox_notifier");
-const user_state = inject("user_state");
-const route = useRoute();
 
 
 function clear_mailbox() {
@@ -110,4 +133,6 @@ function clear_mailbox() {
         err_msg.value = "Cannot clear empty mailbox."
     }
 }
+
+
 </script>
