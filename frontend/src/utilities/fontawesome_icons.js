@@ -19,6 +19,12 @@ import {
     faChevronCircleRight,
     faDigitalTachograph,
     faCloud,
+    faEnvelope,
+    faEnvelopeOpen,
+    faEye,
+    faFolder,
+    faFolderOpen,
+    faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -40,5 +46,11 @@ library.add(faCaretSquareDown);
 library.add(faChevronCircleRight);
 library.add(faWrench);
 library.add(faCloud);
+library.add(faEnvelope);
+library.add(faEnvelopeOpen);
+library.add(faEye);
+library.add(faFolder);
+library.add(faFolderOpen);
+library.add(faMailBulk);
 
 export default FontAwesomeIcon;

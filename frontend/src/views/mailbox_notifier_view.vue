@@ -9,22 +9,24 @@
                         <div class="d-flex flex-column justify-content-center align-items-center ms-2" style="width: 3rem">
                             <font-awesome-icon v-if="slider_data.start - slider_data.step >= 0" :icon="['fas', 'chevron-left']" size="2x" @click="prev_cards()" style="cursor:pointer"/>
                         </div>
-        
-                        <div class="d-flex" :key="slider_data.start">
-                            <div v-for="sensor in list_data.device_list.slice(slider_data.start, slider_data.end)" :key="sensor.id"
-                                class="col-auto"
-                                style="cursor: pointer"
-                                @click="change_displayed_device(sensor)"
-                            >
-                                <div class="sensor-card card ms-2 me-2" :class="{ 'selected-card': list_data.displayed_device.id == sensor.id }" style="width: 18rem; height: 15rem;">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                        <h5 class="card-title fw-bold">{{ sensor.device_name || sensor.device_id }}</h5>
-                                        <p v-if="sensor.device_description" class="card-text mt-4">{{ sensor.device_description }}</p>
-                                        <p v-else class="card-text"><i>Missing sensor description.</i></p>
+
+                        <transition :name="slider_data.transition_name" mode="out-in">
+                            <div class="d-flex" :key="slider_data.start">
+                                <div v-for="sensor in list_data.device_list.slice(slider_data.start, slider_data.end)" :key="sensor.id"
+                                    class="col-auto"
+                                    style="cursor: pointer"
+                                    @click="change_displayed_device(sensor)"
+                                >
+                                    <div class="sensor-card card ms-2 me-2" :class="{ 'selected-card': list_data.displayed_device.id == sensor.id }" style="width: 18rem; height: 15rem;">
+                                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                            <h5 class="card-title fw-bold">{{ sensor.device_name || sensor.device_id }}</h5>
+                                            <p v-if="sensor.device_description" class="card-text mt-4">{{ sensor.device_description }}</p>
+                                            <p v-else class="card-text"><i>Missing sensor description.</i></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </transition>
         
                         <div class="d-flex flex-column justify-content-center align-items-center me-2" style="width: 3rem">
                             <font-awesome-icon v-if="slider_data.start + slider_data.step < list_data.device_list.length" :icon="['fas', 'chevron-right']" size="2x" @click="next_cards()" style="cursor:pointer"/>
@@ -117,9 +119,9 @@
                     <label class="form-label">Description</label>
                     <textarea class="form-control" rows="3" v-model="create_data.device_description"></textarea>
                 </div>
-                <div class="form-check mb-3">
+                <div class="mb-3">
                     <label class="form-check-label" for="notify_checkbox">Notify</label>
-                    <input class="form-check-input" type="checkbox" id="notify_checkbox" v-model="create_data.should_notify">
+                    <input class="form-check-input ms-2" type="checkbox" id="notify_checkbox" v-model="create_data.should_notify">
                 </div>
                 <div v-if="create_data.should_notify" class="mb-3">
                     <label class="form-label">Emails</label>
@@ -253,7 +255,7 @@ let list_data = reactive({
     displayed_device: {},
 })
 
-provide("get_mailbox_notifier", get_mailbox_notifier);
+provide("update_mailbox_notifier", get_mailbox_notifier);
 
 
 watch(() => route.params.device_id, () => {
@@ -283,9 +285,7 @@ function change_displayed_device(device) {
         router.push({ name: 'mailbox_notifier_view' });
     } else {
         list_data.displayed_device = device;
-        console.log(list_data.displayed_device);
-        // redirect to detail
-        // router.push({ name: 'room_sensor_dashboard', params: { device_id: device.id } });
+        router.push({ name: 'mailbox_notifier_mail', params: { device_id: device.id } });
     }
 }
 
@@ -314,7 +314,7 @@ function create_mailbox_notifier() {
         device_name: create_data.device_name,
         device_description: create_data.device_description,
         should_notify: create_data.should_notify,
-        emails: create_data.emails.split("\n").filter(n => n),
+        emails: create_data.emails.length ? create_data.emails.split("\n").filter(n => n) : [],
     };
     axios  
         .post("/api/v1/mailboxnotifier/", request_data)

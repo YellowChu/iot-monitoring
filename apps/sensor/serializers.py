@@ -261,7 +261,6 @@ class MailboxNotifierSerializer(serializers.ModelSerializer):
             "device_id",
             "device_name",
             "device_description",
-            "is_mail",
             "number_of_mails",
             "should_notify",
             "emails",

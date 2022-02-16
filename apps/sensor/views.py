@@ -4,7 +4,6 @@ import json
 import pytz
 import requests
 from dateutil.parser import parse as parse_date
-from datetime import datetime, timedelta, time
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
@@ -12,7 +11,7 @@ from django.utils import timezone
 
 from rest_framework.authtoken.models import Token
 
-from apps.sensor.models import RoomSensor, DailyDownlinksCount
+from apps.sensor.models import DailyDownlinksCount, MailboxNotifier, RoomSensor
 
 
 # TODO: make function decorator
@@ -143,3 +142,15 @@ def export_room_sensor_uplinks(request, pk):
         return response
     else:
         return JsonResponse({"status": "user_nok"})
+
+
+def clear_mailbox(request, pk):
+    if not token_authorized(request):
+        return JsonResponse({"status": "user_nok"})
+    
+    mailbox_notifier = MailboxNotifier.objects.filter(pk=pk).first()
+    if not mailbox_notifier:
+        return JsonResponse({"status": "sensor_nok"})
+    
+    mailbox_notifier.clear_mailbox()
+    return JsonResponse({"status": "ok"})
