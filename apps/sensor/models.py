@@ -4,6 +4,9 @@ from struct import unpack
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
+from utils.emailing import send_email
+
+
 '''
 TTN payload example:
 {
@@ -126,6 +129,15 @@ class MailboxNotifier(models.Model):
     def clear_mailbox(self):
         self.number_of_mails = 0
         self.save()
+
+        if self.should_notify and self.emails:
+            content = f"Someone cleared your mailbox. You do not need to check it anymore.\n\nYours sincerely\nDavid's slave."
+            send_email(subject="Mailbox cleared", to=self.emails, content=content)
+
+    def notify_owners(self):
+        if self.should_notify and self.emails:
+            content = f"There is/are {self.number_of_mails} mail(s) in your mailbox.\n\nYours sincerely\nDavid's slave."
+            send_email(subject="New mail!", to=self.emails, content=content)
 
 
 class DailyDownlinksCount(models.Model):

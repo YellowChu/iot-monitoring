@@ -200,3 +200,7 @@ TTN_API_KEY = os.getenv("TTN_API_KEY")
 TTN_POST_BEARER = os.getenv("TTN_POST_BEARER")
 TTN_DL_URL = os.getenv("TTN_DL_URL")
 TTN_DEVICE_ID = os.getenv("TTN_DEVICE_ID")
+
+# SMTP Gmail
+EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")

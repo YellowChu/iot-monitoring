@@ -76,6 +76,7 @@ def parse_uplink_message(msg_payload):
         mailbox_notifier, _ = MailboxNotifier.objects.get_or_create(device_id=device_id)
         mailbox_notifier.number_of_mails += 1
         mailbox_notifier.save()
+        mailbox_notifier.notify_owners()
 
     notify_about_uplink()
 

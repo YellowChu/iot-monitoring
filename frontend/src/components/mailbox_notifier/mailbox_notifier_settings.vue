@@ -106,7 +106,7 @@ const user_state = inject("user_state");
 const route = useRoute()
 
 
-watch([name, description], () => {
+watch([name, description, should_notify, emails], () => {
     data.enable_save = true;
 })
 
@@ -115,7 +115,10 @@ function save_changes() {
     let request_data = {
         device_name: name.value,
         device_description: description.value,
+        should_notify: should_notify.value,
+        emails: emails.value.split("\n").filter(n => n),
     };
+    console.log(request_data);
     axios
         .patch("/api/v1/mailboxnotifier/" + route.params.device_id + "/", request_data)
         .then(() => {
