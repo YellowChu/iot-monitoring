@@ -1,5 +1,5 @@
-from apps.sensor.models import MailboxNotifier, RoomSensor
-from apps.sensor.serializers import MailboxNotifierSerializer, RoomSensorSerializer, RoomSensorDashboardSerializer
+from apps.sensor.models import CarTracker, MailboxNotifier, RoomSensor
+from apps.sensor.serializers import CarTrackerSerializer, MailboxNotifierSerializer, RoomSensorSerializer, RoomSensorDashboardSerializer
 
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
@@ -36,3 +36,15 @@ class MailboxNotifierViewSet(
 ):
     serializer_class = MailboxNotifierSerializer
     queryset = MailboxNotifier.objects.all().order_by("id")
+
+
+class CarTrackerViewSet(
+    GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+):
+    serializer_class = CarTrackerSerializer
+    queryset = CarTracker.objects.all().order_by("id")

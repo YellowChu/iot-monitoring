@@ -13,6 +13,10 @@ import mailbox_notifier_view from "@/views/mailbox_notifier_view.vue";
 import mailbox_notifier_mail from "@/components/mailbox_notifier/mailbox_notifier_mail.vue";
 import mailbox_notifier_settings from "@/components/mailbox_notifier/mailbox_notifier_settings.vue";
 
+import car_tracker_view from "@/views/car_tracker_view.vue";
+import car_tracker_location from "@/components/car_tracker/car_tracker_location.vue";
+import car_tracker_settings from "@/components/car_tracker/car_tracker_settings.vue";
+
 
 const routes = [
     {
@@ -63,6 +67,24 @@ const routes = [
                 path: ":device_id/settings",
                 name: "mailbox_notifier_settings",
                 component: mailbox_notifier_settings
+            },
+        ]
+    },
+    {
+        path: "/car_tracker",
+        name: "car_tracker_view",
+        component: car_tracker_view,
+        children: [
+            {
+                path: ":device_id/location",
+                alias: ":device_id/",
+                name: "car_tracker_location",
+                component: car_tracker_location
+            },
+            {
+                path: ":device_id/settings",
+                name: "car_tracker_settings",
+                component: car_tracker_settings
             },
         ]
     },

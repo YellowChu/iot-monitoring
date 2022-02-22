@@ -16,6 +16,9 @@
             <li class="nav-item main-nav-item">
                     <router-link :to="{ name: 'mailbox_notifier_view' }" class="nav-link fw-bold text-white">Mailbox Notifier</router-link>
             </li>
+            <li class="nav-item main-nav-item">
+                    <router-link :to="{ name: 'car_tracker_view' }" class="nav-link fw-bold text-white">Car Tracker</router-link>
+            </li>
 
             <li v-if="!user_state.is_authenticated" class="nav-item">
                 <router-link :to="{ name: 'user_login' }" class="nav-link login-link text-white fw-bold">Sign In</router-link>

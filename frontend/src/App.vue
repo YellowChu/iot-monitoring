@@ -10,11 +10,11 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e1e24;
+    background: #b2b2bc;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #b2b2bc;
+    background: #1e1e24;
 }
 
 @font-face {

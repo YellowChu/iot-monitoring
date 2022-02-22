@@ -53,7 +53,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
-                                    <th scope="row">{{ idx }}</th>
+                                    <th scope="row">{{ idx + 1 }}</th>
                                     <td>{{ parse_date(data.time) }}</td>
                                     <td>{{ data.temperature.toFixed(2) }}</td>
                                 </tr>
@@ -94,7 +94,7 @@
                             </thead>    
                             <tbody>
                                 <tr v-for="(data, idx) in props.data_list" :key="data.time + idx">
-                                    <th scope="row">{{ idx }}</th>
+                                    <th scope="row">{{ idx + 1 }}</th>
                                     <td>{{ parse_date(data.time) }}</td>
                                     <td>{{ (data.pressure / 1000).toFixed(2) }}</td>
                                 </tr>
@@ -123,7 +123,7 @@
     z-index: 1;
 }
 
-table::-webkit-scrollbar {
+/* table::-webkit-scrollbar {
     width: 0.4rem;
 }
 
@@ -133,7 +133,7 @@ table::-webkit-scrollbar-track {
 
 table::-webkit-scrollbar-thumb {
     background: #b2b2bc;
-}
+} */
 
 table  { 
     border-collapse: collapse;

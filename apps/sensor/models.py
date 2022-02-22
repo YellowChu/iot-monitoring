@@ -140,6 +140,20 @@ class MailboxNotifier(models.Model):
             send_email(subject="New mail!", to=self.emails, content=content)
 
 
+class CarTracker(models.Model):
+    device_id = models.CharField(max_length=256, default="", unique=True)
+    device_name = models.CharField(max_length=256, default="", blank=True)
+    device_description = models.TextField(blank=True)
+
+    uplinks = models.ManyToManyField(Uplink, blank=True)
+
+    def __str__(self):
+        return self.device_id
+
+    def parse_uplink_payload(self):
+        return (49.219250, 16.523830)
+
+
 class DailyDownlinksCount(models.Model):
     DAILY_LIMIT = 10
 

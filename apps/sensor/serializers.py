@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, time
 from django.utils import timezone
 from rest_framework import serializers
 
-from apps.sensor.models import DailyDownlinksCount, MailboxNotifier, RoomSensor
+from apps.sensor.models import CarTracker, DailyDownlinksCount, MailboxNotifier, RoomSensor
 
 
 class RoomSensorSerializer(serializers.ModelSerializer):
@@ -29,144 +29,22 @@ class RoomSensorSerializer(serializers.ModelSerializer):
 
     def get_sensor_data_list(self, room_sensor):
         sensor_data_list = []
-        if room_sensor.device_id == "test":
-            sensor_data_list = [
-                {
-                    "time": "2022-01-16T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-17T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-18T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-19T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-20T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-21T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-22T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-23T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-24T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-25T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-26T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-27T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-28T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-29T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-30T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-01-31T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-02-01T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-02-02T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-02-03T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-                {
-                    "time": "2022-02-04T09:30:12.028Z",
-                    "pressure": randint(100, 120),
-                    "temperature": randint(20, 30),
-                    "battery": 4.691720485687256
-                },
-            ]
-        else:
-            if room_sensor.displayed_uplinks_number == None:
-                uplinks = room_sensor.uplinks.all()
-            else:
-                uplinks = room_sensor.uplinks.all()[:room_sensor.displayed_uplinks_number]
 
-            for uplink in uplinks:
-                pressure, temperature, battery = room_sensor.parse_uplink_payload(uplink.payload)
-                sensor_data = {
-                    "time": uplink.received_at or uplink.created,
-                    "pressure": pressure,
-                    "temperature": temperature,
-                    "battery": battery, 
-                }
-                sensor_data_list.append(sensor_data)
+        if room_sensor.displayed_uplinks_number == None:
+            uplinks = room_sensor.uplinks.all()
+        else:
+            uplinks = room_sensor.uplinks.all()[:room_sensor.displayed_uplinks_number]
+
+        for uplink in uplinks:
+            pressure, temperature, battery = room_sensor.parse_uplink_payload(uplink.payload)
+            sensor_data = {
+                "time": uplink.received_at or uplink.created,
+                "pressure": pressure,
+                "temperature": temperature,
+                "battery": battery, 
+            }
+            sensor_data_list.append(sensor_data)
+
         return sensor_data_list
 
     def get_uplinks_count(self, room_sensor):
@@ -265,3 +143,33 @@ class MailboxNotifierSerializer(serializers.ModelSerializer):
             "should_notify",
             "emails",
         ]
+
+
+class CarTrackerSerializer(serializers.ModelSerializer):
+    locations_data_list = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CarTracker
+        fields = [
+            "id",
+            "device_id",
+            "device_name",
+            "device_description",
+            "locations_data_list",
+        ]
+
+    def get_locations_data_list(self, car_tracker):
+        location_data_list = []
+
+        uplinks = car_tracker.uplinks.all()[:10]
+
+        for uplink in uplinks:
+            latitude, longtitude = car_tracker.parse_uplink_payload()
+            sensor_data = {
+                "time": uplink.received_at or uplink.created,
+                "latitude": latitude,
+                "longtitude": longtitude,
+            }
+            location_data_list.append(sensor_data)
+
+        return location_data_list

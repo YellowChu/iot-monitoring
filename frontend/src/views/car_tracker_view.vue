@@ -84,9 +84,9 @@
 
             <transition name="slide-right" mode="out-in">
                 <div :key="list_data.displayed_device.id">
-                    <mailbox_notifier_detail
-                        :mailbox_notifier="list_data.displayed_device"
-                    ></mailbox_notifier_detail>
+                    <car_tracker_detail
+                        :car_tracker="list_data.displayed_device"
+                    ></car_tracker_detail>
                 </div>
             </transition>
         </div>
@@ -98,11 +98,11 @@
         @close="create_data.show_create_modal=false; create_data.enable_create=false; create_data.form_err_msg='';"
     >
         <template v-slot:header>
-            <h4 class="modal-title" id="myModalLabel">Add Mailbox Notifier</h4>
+            <h4 class="modal-title" id="myModalLabel">Add Car Tracker</h4>
         </template>
 
         <template v-slot:body>
-            <form id="create_room_sensor_form" class="sensor-form" @submit.prevent="create_mailbox_notifier()">
+            <form id="create_room_sensor_form" class="sensor-form" @submit.prevent="create_car_tracker()">
                 <div v-if="create_data.form_err_msg" class="alert alert-danger" role="alert">
                     {{ create_data.form_err_msg }}
                 </div>
@@ -118,14 +118,6 @@
                 <div class="mb-3">
                     <label class="form-label">Description</label>
                     <textarea class="form-control" rows="3" v-model="create_data.device_description"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-check-label" for="notify_checkbox">Notify</label>
-                    <input class="form-check-input ms-2" type="checkbox" id="notify_checkbox" v-model="create_data.should_notify">
-                </div>
-                <div v-if="create_data.should_notify" class="mb-3">
-                    <label class="form-label">Emails</label>
-                    <textarea class="form-control" rows="3" v-model="create_data.emails"></textarea>
                 </div>
             </form>
         </template>
@@ -225,6 +217,7 @@
 </style>
 
 <script setup>
+/* eslint-disable */
 import axios from "axios";
 
 import { onMounted, provide, reactive, watch } from "vue";
@@ -232,7 +225,7 @@ import router from "@/router";
 import { useRoute } from "vue-router";
 import { useMq } from "vue3-mq";
 
-import mailbox_notifier_detail from "@/components/mailbox_notifier/mailbox_notifier_detail.vue";
+import car_tracker_detail from "@/components/car_tracker/car_tracker_detail.vue";
 import modal_window from "@/components/ui/modal_window.vue";
 import wave_footer from "@/components/ui/wave_footer.vue";
 
@@ -245,7 +238,7 @@ onMounted(() => {
         slider_data.end = 1;
         slider_data.step = 1;
     }
-    get_mailbox_notifier();
+    get_car_tracker();
 })
 
 // DEVICE LIST
@@ -254,7 +247,7 @@ let list_data = reactive({
     displayed_device: {},
 })
 
-provide("update_mailbox_notifier", get_mailbox_notifier);
+provide("update_car_tracker", get_car_tracker);
 
 
 watch(() => route.params.device_id, () => {
@@ -263,10 +256,11 @@ watch(() => route.params.device_id, () => {
     }
 })
 
-function get_mailbox_notifier() {
+function get_car_tracker() {
     axios
-        .get("/api/v1/mailboxnotifier/")
+        .get("/api/v1/cartracker/")
         .then((resp) => {
+            console.log(resp);
             list_data.device_list = resp.data;
 
             if (route.params.device_id && route.params.device_id != "undefined") {
@@ -281,10 +275,10 @@ function get_mailbox_notifier() {
 function change_displayed_device(device) {
     if (list_data.displayed_device.id == device.id) {
         list_data.displayed_device = {};
-        router.push({ name: 'mailbox_notifier_view' });
+        router.push({ name: 'car_tracker_view' });
     } else {
         list_data.displayed_device = device;
-        router.push({ name: 'mailbox_notifier_mail', params: { device_id: device.id } });
+        router.push({ name: 'car_tracker_location', params: { device_id: device.id } });
     }
 }
 
@@ -298,8 +292,6 @@ let create_data = reactive({
     device_id: "",
     device_name: "",
     device_description: "",
-    should_notify: false,
-    emails: "",
 })
 
 
@@ -307,24 +299,20 @@ watch(() => create_data.device_id, () => {
     create_data.enable_create = true;
 })
 
-function create_mailbox_notifier() {
+function create_car_tracker() {
     let request_data = {
         device_id: create_data.device_id,
         device_name: create_data.device_name,
         device_description: create_data.device_description,
-        should_notify: create_data.should_notify,
-        emails: create_data.emails.length ? create_data.emails.split("\n").filter(n => n) : [],
     };
     axios  
-        .post("/api/v1/mailboxnotifier/", request_data)
+        .post("/api/v1/cartracker/", request_data)
         .then(() => {
-            get_mailbox_notifier();
+            get_car_tracker();
             create_data.show_create_modal = false;
             create_data.device_id = "";
             create_data.device_name = "";
             create_data.device_description = "";
-            create_data.should_notify = false;
-            create_data.emails = [];
         })
         .catch((err) => {
             if (err.response.data) {

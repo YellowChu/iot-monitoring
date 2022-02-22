@@ -25,6 +25,7 @@ import {
     faFolder,
     faFolderOpen,
     faMailBulk,
+    faMapMarked,
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -52,5 +53,6 @@ library.add(faEye);
 library.add(faFolder);
 library.add(faFolderOpen);
 library.add(faMailBulk);
+library.add(faMapMarked);
 
 export default FontAwesomeIcon;
