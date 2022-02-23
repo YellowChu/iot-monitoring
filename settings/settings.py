@@ -36,6 +36,11 @@ ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "iot-monitored.herokuapp.c
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://localhost:8080", "https://iot-monitored.herokuapp.com"]
 
+# Needed for 'debug' to be available inside templates.
+# https://docs.djangoproject.com/en/3.2/ref/templates/api/#django-template-context-processors-debug
+INTERNAL_IPS = ["127.0.0.1"]
+
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
