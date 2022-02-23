@@ -76,7 +76,7 @@
 <script setup>
 import axios from "axios";
 
-import { defineProps, inject, ref } from "vue";
+import { inject, ref } from "vue";
 import { useRoute } from "vue-router";
 
 import unlogged_warning from "@/components/user/unlogged_warning.vue";

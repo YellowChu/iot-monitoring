@@ -64,7 +64,7 @@
 <script setup>
 import axios from "axios";
 
-import { defineProps, inject, reactive, ref, watch } from "vue";
+import { inject, reactive, ref, watch } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
 

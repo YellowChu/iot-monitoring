@@ -78,7 +78,7 @@
 <script setup>
 import axios from "axios";
 
-import { defineProps, inject, ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { useRoute } from "vue-router";
 
 import modal_window from "@/components/ui/modal_window.vue";

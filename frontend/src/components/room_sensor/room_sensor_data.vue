@@ -134,7 +134,7 @@ th     { background:#eee; }
 <script setup>
 import moment from "moment";
 
-import { inject, defineProps } from "vue";
+import { inject } from "vue";
 
 import line_chart from "@/components/data_presentation/line_chart.vue";
 import room_sensor_configure_data from "@/components/room_sensor/room_sensor_configure_data.vue";

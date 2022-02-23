@@ -10,7 +10,7 @@
 
 <script setup>
 /* eslint-disable */
-import { defineProps, reactive, watch } from "vue";
+import { reactive, watch } from "vue";
 import apexcharts from "vue3-apexcharts";
 
 

@@ -37,7 +37,7 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 
-import { defineProps, reactive } from "vue";
+import { reactive } from "vue";
 
 
 const props = defineProps({
