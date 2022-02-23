@@ -123,18 +123,6 @@
     z-index: 1;
 }
 
-/* table::-webkit-scrollbar {
-    width: 0.4rem;
-}
-
-table::-webkit-scrollbar-track {
-    background: #1e1e24;
-}
-
-table::-webkit-scrollbar-thumb {
-    background: #b2b2bc;
-} */
-
 table  { 
     border-collapse: collapse;
     width: 100%;
