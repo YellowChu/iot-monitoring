@@ -17,5 +17,5 @@ urlpatterns = [
     re_path(r"^sensor/", include(sensor_urls)),
 
     re_path(r"^token-auth/", views.token_authorized),
-    re_path(r"^(?!admin).*$", TemplateView.as_view(template_name="index.html")),
+    re_path(r"^(?!admin).*$", TemplateView.as_view(template_name="base.html")),
 ]
