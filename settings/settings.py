@@ -180,15 +180,24 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Vite App Dir: point it to the folder your vite app is in.
+VITE_APP_DIR = BASE_DIR / "vitefrontend/src"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = 'templates/static/'
-
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    VITE_APP_DIR / "dist",
 ]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = 'templates/static/'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
