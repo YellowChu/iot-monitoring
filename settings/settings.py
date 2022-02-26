@@ -181,7 +181,7 @@ USE_TZ = True
 
 
 # Vite App Dir: point it to the folder your vite app is in.
-VITE_APP_DIR = BASE_DIR / "vitefrontend/src"
+VITE_APP_DIR = BASE_DIR / "frontend/src"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
