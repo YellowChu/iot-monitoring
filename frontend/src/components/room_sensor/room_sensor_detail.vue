@@ -2,80 +2,46 @@
     <div v-if="props.room_sensor.id" class="row d-flex justify-content-center align-items-center mt-4" style="width: 100rem;">
         <div class="col-xl-12 col-md-6">
             <div class="card pt-2 pb-4" style="box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);">
-                <ul v-if="mq.isLandscape" class="nav nav-tabs ps-4 fw-bold">
-                    <li class="nav-item mb-0 ms-5 me-5">
-                        <router-link
-                            :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
-                            class="nav-link"
-                            :class="{active: route.name==='room_sensor_dashboard'}"
-                        >
-                            <font-awesome-icon :icon="['fas', 'digital-tachograph']"/> Dashboard
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-0 ms-5 me-5">
-                        <router-link
-                            :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
-                            class="nav-link"
-                            :class="{active: route.name==='room_sensor_data'}"
-                        >
-                            <font-awesome-icon :icon="['fas', 'chart-line']"/> Data
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-0 ms-5 me-5">
-                        <router-link
-                            :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
-                            class="nav-link"
-                            :class="{active: route.name==='room_sensor_downlink'}"
-                        >
-                            <font-awesome-icon :icon="['fas', 'caret-square-down']"/> Schedule downlink
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-0 ms-5 me-5">
-                        <router-link
-                            :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
-                            class="nav-link"
-                            :class="{active: route.name==='room_sensor_settings'}"
-                        >
-                            <font-awesome-icon :icon="['fas', 'wrench']"/> Settings
-                        </router-link>
-                    </li>
-                </ul>
-                <nav v-if="mq.isPortrait" class="navbar d-flex fixed-bottom navbar-expand justify-content-center">
-                    <ul class="navbar-nav p-3">
-                        <li class="nav-item ms-5 me-5">
+                <nav :class="{'navbar d-flex fixed-bottom navbar-expand justify-content-center' : mq.isPortrait }">
+                    <ul :class="{ 'nav nav-tabs ps-4 fw-bold': mq.isLandscape, 'navbar-nav p-3': mq.isPortrait }">
+                        <li class="nav-item  ms-5 me-5" :class="{ 'mb-0': mq.isLandscape }">
                             <router-link
                                 :to="{ name: 'room_sensor_dashboard', params: { device_id: props.room_sensor.id } }"
-                                class="nav-link-bot me-5"
+                                class="nav-link"
                                 :class="{active: route.name==='room_sensor_dashboard'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'digital-tachograph']" size="4x"/>
+                                <font-awesome-icon :icon="['fas', 'digital-tachograph']" :size="mq.isPortrait ? '4x' : '1x'"/>
+                                <span v-if="mq.isLandscape"> Dashboard</span>
                             </router-link>
                         </li>
-                        <li class="nav-item ms-5 me-5">
+                        <li class="nav-item  ms-5 me-5" :class="{ 'mb-0': mq.isLandscape }">
                             <router-link
                                 :to="{ name: 'room_sensor_data', params: { device_id: props.room_sensor.id } }"
-                                class="nav-link-bot me-5"
+                                class="nav-link"
                                 :class="{active: route.name==='room_sensor_data'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'chart-line']" size="4x"/>
+                                <font-awesome-icon :icon="['fas', 'chart-line']" :size="mq.isPortrait ? '4x' : '1x'"/>
+                                <span v-if="mq.isLandscape"> Data</span>
                             </router-link>
                         </li>
-                        <li class="nav-item ms-5 me-5">
+                        <li class="nav-item  ms-5 me-5" :class="{ 'mb-0': mq.isLandscape }">
                             <router-link
                                 :to="{ name: 'room_sensor_downlink', params: { device_id: props.room_sensor.id } }"
-                                class="nav-link-bot me-5"
+                                class="nav-link"
                                 :class="{active: route.name==='room_sensor_downlink'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'caret-square-down']" size="4x"/>
+                                <font-awesome-icon :icon="['fas', 'caret-square-down']" :size="mq.isPortrait ? '4x' : '1x'"/>
+                                <span v-if="mq.isLandscape"> Schedule downlink</span>
                             </router-link>
                         </li>
-                        <li class="nav-item ms-5 me-5">
+                        <li class="nav-item  ms-5 me-5" :class="{ 'mb-0': mq.isLandscape }">
                             <router-link
                                 :to="{ name: 'room_sensor_settings', params: { device_id: props.room_sensor.id } }"
-                                class="nav-link-bot me-5"
+                                class="nav-link"
                                 :class="{active: route.name==='room_sensor_settings'}"
                             >
-                                <font-awesome-icon :icon="['fas', 'wrench']" size="4x"/>
+                                <font-awesome-icon :icon="['fas', 'wrench']" :size="mq.isPortrait ? '4x' : '1x'"/>
+                                <span v-if="mq.isLandscape"> Settings</span>
                             </router-link>
                         </li>
                     </ul>
