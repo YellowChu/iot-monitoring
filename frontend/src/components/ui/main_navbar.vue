@@ -4,20 +4,20 @@
         <router-link :to="{ name: 'homepage_view' }" class="nav-link fw-bold text-white" style="font-size: 32px">IoT Gardienne</router-link>
     </div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item main-nav-item">
-                    <router-link :to="{ name: 'room_sensor_view' }" class="nav-link fw-bold text-white">Room Sensor</router-link>
+                <router-link :to="{ name: 'room_sensor_view' }" class="nav-link fw-bold text-white">Room Sensor</router-link>
             </li>
             <li class="nav-item main-nav-item">
-                    <router-link :to="{ name: 'mailbox_notifier_view' }" class="nav-link fw-bold text-white">Mailbox Notifier</router-link>
+                <router-link :to="{ name: 'mailbox_notifier_view' }" class="nav-link fw-bold text-white">Mailbox Notifier</router-link>
             </li>
             <li class="nav-item main-nav-item">
-                    <router-link :to="{ name: 'car_tracker_view' }" class="nav-link fw-bold text-white">Car Tracker</router-link>
+                <router-link :to="{ name: 'car_tracker_view' }" class="nav-link fw-bold text-white">Car Tracker</router-link>
             </li>
 
             <li v-if="!user_state.is_authenticated" class="nav-item">
@@ -29,7 +29,37 @@
                 </button>
             </li>
         </ul>
+
     </div>
+
+    <teleport to="body">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <a class="nav-link fw-bold text-white" data-bs-dismiss="offcanvas" style="cursor: pointer; font-size: 32px" @click="side_nav_redirect('homepage_view')">IoT Gardienne</a>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="nav-item main-nav-item">
+                    <a class="nav-link fw-bold text-white" data-bs-dismiss="offcanvas" style="cursor: pointer;" @click="side_nav_redirect('room_sensor_view')">Room Sensor</a>
+                </div>
+                <div class="nav-item main-nav-item">
+                    <a class="nav-link fw-bold text-white" data-bs-dismiss="offcanvas" style="cursor: pointer;" @click="side_nav_redirect('mailbox_notifier_view')">Mailbox Notifier</a>
+                </div>
+                <div class="nav-item main-nav-item">
+                    <a class="nav-link fw-bold text-white" data-bs-dismiss="offcanvas" style="cursor: pointer;" @click="side_nav_redirect('car_tracker_view')">Car Tracker</a>
+                </div>
+
+                <div v-if="!user_state.is_authenticated" class="nav-item mt-5">            
+                    <a class="nav-link login-link text-white fw-bold" data-bs-dismiss="offcanvas" @click="side_nav_redirect('user_login')">Sign In</a>
+                </div>
+                <div v-else class="nav-item mt-5">
+                    <button type="button" class="btn btn-secondary fw-bold" @click="logout()">
+                        <a>Sign Out</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </teleport>
 </nav>
 </template>
 
@@ -55,6 +85,9 @@
 .login-link:hover {
     background: gray;
 }
+.offcanvas {
+    background: linear-gradient(#9198e5, #e66465);
+}
 </style>
 
 <script setup>
@@ -66,6 +99,11 @@ import router from "@/router";
 
 const user_state = inject("user_state");
 const remove_token = inject("remove_token");
+
+
+function side_nav_redirect(destination_name) {
+    router.push({ name: destination_name });
+}
 
 
 function logout() {
