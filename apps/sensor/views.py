@@ -36,8 +36,14 @@ def schedule_downlink(request):
             "SF12": "00",
             "Unchanged": "06",
         }
-        
-        room_sensor = RoomSensor.objects.filter(device_id="lopy4-otaa").first()
+
+        room_sensor_id = int(request.GET.get("room_sensor_id", "0"))
+        spreading_factor = request.GET.get("spreading_factor", "Unchanged")
+        color_code = request.GET.get("color_code", "Unchanged")
+
+        room_sensor = RoomSensor.objects.filter(pk=room_sensor_id).first()
+        if not room_sensor:
+            return JsonResponse({"status": "dev_nok"}) 
 
         today_downlink_count = DailyDownlinksCount.objects.filter(
             date__gte=timezone.now().replace(hour=0, minute=0, second=0),
@@ -47,8 +53,6 @@ def schedule_downlink(request):
         if today_downlink_count and today_downlink_count.downlink_count >= DailyDownlinksCount.DAILY_LIMIT:
             return JsonResponse({"status": "limit_nok"})
 
-        spreading_factor = request.GET.get("spreading_factor", "Unchanged")
-        color_code = request.GET.get("color_code", "Unchanged")
 
         payload_sf = sf_dr.get(spreading_factor, "06")
         if color_code == "Unchanged":

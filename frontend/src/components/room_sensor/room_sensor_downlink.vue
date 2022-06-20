@@ -122,7 +122,10 @@ import { inject, ref, watch } from 'vue';
 
 import modal_window from "@/components/ui/modal_window.vue";
 import unlogged_warning from "@/components/user/unlogged_warning.vue";
+import { useRoute } from "vue-router";
 
+
+const route = useRoute();
 
 let spreading_factor = ref("Unchanged");
 let sleep_time = ref("unknown");
@@ -164,12 +167,15 @@ watch(spreading_factor, (sf) => {
 
 function schedule_downlink() {
     let request_data = {
+        room_sensor_id: route.params.device_id,
         spreading_factor: spreading_factor.value,
         color_code: enable_color_change.value ? color.value.substring(1).toUpperCase() : "Unchanged",
     };
+    console.log(request_data);
     axios
         .get("/sensor/schedule_downlink/", {params: request_data})
         .then((resp) => {
+            console.log(resp.data);
             if (resp.data.status == "ok") {
                 show_downlink_modal.value = false;
                 downlink_successfull.value = true;
