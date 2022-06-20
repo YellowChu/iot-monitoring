@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid">
+<div class="container-fluid" :class="{ 'size-control-xs' : mq.xs, 'size-control-sm' : mq.sm }">
     <div class="row mt-5 mb-5 d-flex justify-content-center align-items-center">
         <h2 class="fw-bold justify-content-center" style="color: #074879;">Gathered data</h2>
     </div>
@@ -109,6 +109,14 @@
 </template>
 
 <style scoped>
+.size-control-xs {
+    width: 375px !important;
+}
+
+.size-control-sm {
+    width: 500px !important;
+}
+
 .home-sensor-data {
     margin-top: 1rem;
 }
@@ -135,6 +143,7 @@ th     { background:#eee; }
 import moment from "moment";
 
 import { inject } from "vue";
+import { useMq } from "vue3-mq";
 
 import line_chart from "@/components/data_presentation/line_chart.vue";
 import room_sensor_configure_data from "@/components/room_sensor/room_sensor_configure_data.vue";
@@ -150,6 +159,7 @@ const props = defineProps({
 })
 
 const update_room_sensor = inject("update_room_sensor");
+const mq = useMq();
 
 
 // websocket listen

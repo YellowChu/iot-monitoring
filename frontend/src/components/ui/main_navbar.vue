@@ -1,7 +1,7 @@
 <template>
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-4">
     <div class="navbar-brand ps-5">
-        <router-link :to="{ name: 'homepage_view' }" class="nav-link fw-bold text-white" style="font-size: 32px">IoT Gardienne</router-link>
+        <router-link :to="{ name: 'homepage_view' }" class="nav-link fw-bold text-white" style="font-size: 32px">IoT Garden</router-link>
     </div>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -35,7 +35,7 @@
     <teleport to="body">
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <a class="nav-link fw-bold text-white" data-bs-dismiss="offcanvas" style="cursor: pointer; font-size: 32px" @click="side_nav_redirect('homepage_view')">IoT Gardienne</a>
+                <a class="nav-link fw-bold text-white" data-bs-dismiss="offcanvas" style="cursor: pointer; font-size: 32px" @click="side_nav_redirect('homepage_view')">IoT Garden</a>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">

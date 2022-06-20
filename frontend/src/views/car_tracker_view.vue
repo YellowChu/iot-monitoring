@@ -48,11 +48,11 @@
                 </div>
             </div>
 
-            <teleport to="body">
+            <!-- <teleport to="body">
                 <wave_footer
                     :bool_trigger="Object.keys(list_data.displayed_device).length == 0"
                 ></wave_footer>
-            </teleport>
+            </teleport> -->
         </div>
 
         <div v-if="Object.keys(list_data.displayed_device).length != 0">

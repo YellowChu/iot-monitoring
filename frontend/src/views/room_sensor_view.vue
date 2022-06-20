@@ -46,11 +46,11 @@
                 </div>
             </div>
 
-            <teleport to="body">
+            <!-- <teleport to="body">
                 <wave_footer
                     :bool_trigger="Object.keys(data.displayed_device).length == 0"
                 ></wave_footer>
-            </teleport>
+            </teleport> -->
         </div>
         <div v-if="Object.keys(data.displayed_device).length != 0">
             <div class="card-group d-flex justify-content-center align-items-center pt-3 pb-3">
